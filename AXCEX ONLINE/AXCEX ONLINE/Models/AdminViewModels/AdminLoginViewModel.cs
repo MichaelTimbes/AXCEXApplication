@@ -8,9 +8,7 @@ namespace AXCEX_ONLINE.Models.AdminViewModels
 {
     public class AdminLoginViewModel
     {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        
 
         [Required]
         public string Admin_Uname { get; set; }

@@ -27,7 +27,10 @@ namespace AXCEX_ONLINE
         public void ConfigureServices(IServiceCollection services)
         {
             
-
+            /* Db Context
+             * Use Sqlite for MACOSX
+             * Use SqlServer for Windows
+             */
             services.AddDbContext<ApplicationDbContext>(options =>
             //options.UseSqlite("Data Source=main.db"));
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

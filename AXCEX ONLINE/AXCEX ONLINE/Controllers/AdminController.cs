@@ -146,10 +146,19 @@ namespace AXCEX_ONLINE.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Admin_Uname, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    // Session Information
+                    var admin = await _context.AdminModel.FirstOrDefaultAsync(m => m.UserName == model.Admin_Uname);
+                    HttpContext.Session.SetString(SessionUserName, admin.UserName);
+                    HttpContext.Session.SetString(SessionUserEmail, admin.Email);
+                    HttpContext.Session.SetString(SessionUserId, admin.Id);
+                    
+                    // Log Info
                     _logger.LogInformation("User logged in.");
+                    
+                    // Return to Home
                     return RedirectToLocal(returnUrl);
                 }
                 
