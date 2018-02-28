@@ -13135,11 +13135,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\micha\\Documents\\GitHubProjects\\asp-net-projs\\AXCEX ONLINE\\AXCEX ONLINE\\AXCEX ONLINE.csproj",
+      "projectUniqueName": "C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX ONLINE\\AXCEX ONLINE\\AXCEX ONLINE.csproj",
       "projectName": "AXCEX ONLINE",
-      "projectPath": "C:\\Users\\micha\\Documents\\GitHubProjects\\asp-net-projs\\AXCEX ONLINE\\AXCEX ONLINE\\AXCEX ONLINE.csproj",
+      "projectPath": "C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX ONLINE\\AXCEX ONLINE\\AXCEX ONLINE.csproj",
       "packagesPath": "C:\\Users\\micha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\micha\\Documents\\GitHubProjects\\asp-net-projs\\AXCEX ONLINE\\AXCEX ONLINE\\obj\\",
+      "outputPath": "C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX ONLINE\\AXCEX ONLINE\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",

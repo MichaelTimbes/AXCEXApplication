@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace AXCEX_ONLINE.Controllers
 {
-    [Authorize(Roles = "EmployeeUser")]
+    //[Authorize(Roles = "EmployeeUser")]
 
     public class EmployeeController : Controller
     {
@@ -26,8 +26,9 @@ namespace AXCEX_ONLINE.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
-        const string SessionUserName = "_Name";
-        const string SessionUserId = "_UID";
+        const string SessionUserName = "_UserName";
+        const string SessionUserId = "_UserId";
+        const string SessionUserEmail = "_Email";
 
         public EmployeeController(
             ApplicationDbContext context,
@@ -60,12 +61,13 @@ namespace AXCEX_ONLINE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EmployeeLogin(EMPLoginViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            //ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                
                 if (result.Succeeded)
                 {
                     // Extract User for Session Seed
@@ -73,9 +75,11 @@ namespace AXCEX_ONLINE.Controllers
                     // Set Context
                     HttpContext.Session.SetString(SessionUserId,Usess.Id);
                     HttpContext.Session.SetString(SessionUserName, Usess.UserName);
+                    HttpContext.Session.SetString(SessionUserName, Usess.Email);
 
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
+                   // return RedirectToAction(controllerName:"Employee", actionName:"EmployeeHome");
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -97,21 +101,29 @@ namespace AXCEX_ONLINE.Controllers
             return View(model);
         }
         
-        // GET: EmployeeModels
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.EmployeeModel.ToListAsync());
-        }
+        
 
         // GET Employee/EmployeeHome/
-        [HttpGet]
-        public IActionResult EmployeeHome()
+        
+        public async Task<IActionResult> EmployeeHome(string id = null)
         {
             // Extract UserID
-            string refID = HttpContext.Session.GetString(SessionUserId);
+            if (String.IsNullOrEmpty(id))
+            {
+                id = HttpContext.Session.GetString(SessionUserId);
+            }
 
-            // Pull Profile and Return Model
-            return View(_context.EmployeeModel.Where(m=>m.Id == refID));
+            if (!String.IsNullOrEmpty(id))
+            {
+                // Pull Profile and Return Model
+                var EmpResult = await _context.EmployeeModel.SingleOrDefaultAsync(m => m.Id == id);
+
+                return View(viewName: "EmployeeHome", model: EmpResult);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
         
         // GET: EmployeeModels/Details/5
@@ -148,40 +160,42 @@ namespace AXCEX_ONLINE.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var TEMP_EMP = new EmployeeModel
+                var user = new EmployeeModel
                 {
+                   
                     EMP_FNAME = model.FNAME,
                     EMP_LNAME = model.LNAME,
-                    UserName = model.FNAME + " " + model.LNAME,
+                    UserName = model.FNAME,
                     Email = model.Email
                 };
-                var result = await _userManager.CreateAsync(TEMP_EMP, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
                     // Session Information
-                    HttpContext.Session.SetString(SessionUserName,TEMP_EMP.UserName);
-                    HttpContext.Session.SetString(SessionUserId, TEMP_EMP.Id);
+                    HttpContext.Session.SetString(SessionUserName,user.UserName);
+                    HttpContext.Session.SetString(SessionUserId, user.Id);
                     _logger.LogInformation("User created a new account with password.");
-
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(TEMP_EMP);
-                    var callbackUrl = Url.EmailConfirmationLink(TEMP_EMP.Id, code, Request.Scheme);
+                    
+                    // Email Confirmation
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
-                    await _signInManager.SignInAsync(TEMP_EMP, isPersistent: false);
+                    
+                    // Signin New User
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
+                    
+                    // If All Went Well- Go to Employee Home Page
                     return RedirectToLocal(returnUrl);
                 }
-                AddErrors(result);
+                // Else
+                RedirectToAction(controllerName: "Home", actionName: "Index");
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        private void AddErrors(IdentityResult result)
-        {
-            throw new NotImplementedException();
+            //return View(model);
+            return RedirectToAction(controllerName: "Home", actionName: "About");
         }
 
         private IActionResult RedirectToLocal(string returnUrl)
@@ -192,7 +206,7 @@ namespace AXCEX_ONLINE.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(controllerName:"Employee", actionName:"EmployeeHome");
             }
         }
 
@@ -234,12 +248,18 @@ namespace AXCEX_ONLINE.Controllers
             return View(employeeModel);
         }
 
+        
+        private bool EmployeeModelExists(string id)
+        {
+            return _context.EmployeeModel.Any(e => e.Id == id);
+        }
+
         // POST: EmployeeModels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles ="EmployeeUser")]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "EmployeeUser")]
+        //[Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ID,EMP_FNAME,EMP_LNAME,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] EmployeeModel employeeModel)
         {
@@ -292,7 +312,7 @@ namespace AXCEX_ONLINE.Controllers
         // POST: EmployeeModels/Delete/5
         [HttpPost, ActionName("Delete")]
         // Only An Admin can delete an Employee
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
@@ -301,10 +321,10 @@ namespace AXCEX_ONLINE.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        private bool EmployeeModelExists(string id)
+        // GET: EmployeeModels
+        public async Task<IActionResult> Index()
         {
-            return _context.EmployeeModel.Any(e => e.Id == id);
+            return View(await _context.EmployeeModel.ToListAsync());
         }
     }
 }

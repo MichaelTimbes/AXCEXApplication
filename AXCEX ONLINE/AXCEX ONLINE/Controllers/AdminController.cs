@@ -13,11 +13,12 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using AXCEX_ONLINE.Services;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace AXCEX_ONLINE.Controllers
 {
     // Give Explicit Authorization as Admin in Application
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
 
     public class AdminController : Controller
     {
@@ -26,6 +27,9 @@ namespace AXCEX_ONLINE.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        const string SessionUserName = "_UserName";
+        const string SessionUserId = "_UserId";
+        const string SessionUserEmail = "_Email";
 
         public AdminController(
             ApplicationDbContext context,
@@ -41,10 +45,78 @@ namespace AXCEX_ONLINE.Controllers
             _emailSender = emailSender;
             _logger = logger;
         }
+        public async Task<IActionResult> AdminHome(string id = null)
+        {
+            // Extract UserID
+            if (String.IsNullOrEmpty(id))
+            {
+                id = HttpContext.Session.GetString(SessionUserId);
+            }
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                // Pull Profile and Return Model
+                var EmpResult = await _context.AdminModel.SingleOrDefaultAsync(m => m.Id == id);
+
+                return View(viewName: "AdminHome", model: EmpResult);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        // GET 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult RegisterAdmin(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterAdmin(AdminRegisterViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                var TEMP_EMP = new AdminModel
+                {
+                    ADMIN_NAME = model.UserName,
+                    UserName = model.UserName,
+                    Email = model.Email
+                };
+                var result = await _userManager.CreateAsync(TEMP_EMP, model.Password);
+
+                if (result.Succeeded)
+                {
+                    // Session Information
+                    HttpContext.Session.SetString(SessionUserName, TEMP_EMP.UserName);
+                    HttpContext.Session.SetString(SessionUserId, TEMP_EMP.Id);
+                    _logger.LogInformation("User created a new account with password.");
+
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(TEMP_EMP);
+                    var callbackUrl = Url.EmailConfirmationLink(TEMP_EMP.Id, code, Request.Scheme);
+                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                    await _signInManager.SignInAsync(TEMP_EMP, isPersistent: false);
+                    _logger.LogInformation("User created a new account with password.");
+                    //return RedirectToAction(controllerName: "Admin", actionName: "AdminHome");
+                    return RedirectToLocal(returnUrl);
+                }
+               // RedirectToAction(controllerName:"Account",actionName: "AddErrors",routeValues: new { result });
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
         // GET Login View
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl = null)
+        public async Task<IActionResult> AdminLogin(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -56,7 +128,7 @@ namespace AXCEX_ONLINE.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(AdminLoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> AdminLogin(AdminLoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
@@ -99,7 +171,7 @@ namespace AXCEX_ONLINE.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(AdminController.Index), "AdminHome");
+                return RedirectToAction(controllerName: "Admin", actionName: "AdminHome");
             }
         }
 
