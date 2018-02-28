@@ -22,6 +22,7 @@ namespace AXCEX_ONLINE.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        const string MODEL_ROLE = "Customer";
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
@@ -223,16 +224,24 @@ namespace AXCEX_ONLINE.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                    
+                    // Email Verification
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
+                    
+                    // Signin
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
+
+                    // Assign Role
+                    _logger.LogInformation("User Customer Role Assigned.");
+                    IdentityResult RoleRes = await _userManager.AddToRoleAsync(user, MODEL_ROLE);
+
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);

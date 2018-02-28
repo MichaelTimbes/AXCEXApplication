@@ -50,10 +50,12 @@ namespace AXCEX_ONLINE
                 options.Cookie.Name = ".AXCEXONLINE.Session";
                 options.Cookie.HttpOnly = true;
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, 
+            IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -77,6 +79,33 @@ namespace AXCEX_ONLINE
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            CreateRoles(serviceProvider);
+        }
+        private void CreateRoles(IServiceProvider serviceProvider)
+        {
+            const string adminRoleName = "Administrator";
+            string[] roleNames = { adminRoleName, "Employee", "Customer" };
+
+            foreach (string roleName in roleNames)
+            {
+                CreateRole(serviceProvider, roleName);
+            }
+
+
+
+        }
+        private static void CreateRole(IServiceProvider serviceProvider, string roleName)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            Task<bool> roleExists = roleManager.RoleExistsAsync(roleName);
+            roleExists.Wait();
+
+            if (!roleExists.Result)
+            {
+                Task<IdentityResult> roleResult = roleManager.CreateAsync(new IdentityRole(roleName));
+                roleResult.Wait();
+            }
         }
     }
 }

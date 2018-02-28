@@ -26,6 +26,7 @@ namespace AXCEX_ONLINE.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        const string MODEL_ROLE = "Employee";
         const string SessionUserName = "_UserName";
         const string SessionUserId = "_UserId";
         const string SessionUserEmail = "_Email";
@@ -185,7 +186,10 @@ namespace AXCEX_ONLINE.Controllers
                     // Signin New User
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    
+
+                    // Add to Role
+                    IdentityResult RoleRes = await _userManager.AddToRoleAsync(user, MODEL_ROLE);
+                   
                     // If All Went Well- Go to Employee Home Page
                     return RedirectToLocal(returnUrl);
                 }

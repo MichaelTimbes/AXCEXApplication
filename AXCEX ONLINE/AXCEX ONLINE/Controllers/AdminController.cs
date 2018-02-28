@@ -27,6 +27,7 @@ namespace AXCEX_ONLINE.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        const string MODEL_ROLE = "Administrator";
         const string SessionUserName = "_UserName";
         const string SessionUserId = "_UserId";
         const string SessionUserEmail = "_Email";
@@ -44,6 +45,7 @@ namespace AXCEX_ONLINE.Controllers
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            
         }
         public async Task<IActionResult> AdminHome(string id = null)
         {
@@ -82,35 +84,44 @@ namespace AXCEX_ONLINE.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var TEMP_EMP = new AdminModel
+                var user = new AdminModel
                 {
-                    ADMIN_NAME = model.UserName,
-                    UserName = model.UserName,
-                    Email = model.Email
+                   
+                   
+                   UserName = model.UserName,
+                   Email = model.Email
                 };
-                var result = await _userManager.CreateAsync(TEMP_EMP, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
                     // Session Information
-                    HttpContext.Session.SetString(SessionUserName, TEMP_EMP.UserName);
-                    HttpContext.Session.SetString(SessionUserId, TEMP_EMP.Id);
+                    HttpContext.Session.SetString(SessionUserName, user.UserName);
+                    HttpContext.Session.SetString(SessionUserId, user.Id);
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(TEMP_EMP);
-                    var callbackUrl = Url.EmailConfirmationLink(TEMP_EMP.Id, code, Request.Scheme);
+                    // Email Confirmation
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    await _signInManager.SignInAsync(TEMP_EMP, isPersistent: false);
+                    // Signin New User
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    //return RedirectToAction(controllerName: "Admin", actionName: "AdminHome");
+
+                    // Add to Role
+                    IdentityResult RoleRes = await _userManager.AddToRoleAsync(user, MODEL_ROLE);
+
+                    // If All Went Well- Go to Employee Home Page
                     return RedirectToLocal(returnUrl);
                 }
-               // RedirectToAction(controllerName:"Account",actionName: "AddErrors",routeValues: new { result });
+                // Else
+                RedirectToAction(controllerName: "Home", actionName: "Index");
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            //return View(model);
+            return RedirectToAction(controllerName: "Home", actionName: "About");
         }
 
         // GET Login View
