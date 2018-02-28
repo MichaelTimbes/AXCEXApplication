@@ -52,66 +52,79 @@ namespace AXCEX_ONLINE.Controllers
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             // Be sure to clear the cache too!
-            HttpContext.Session.Clear();
+            //HttpContext.Session.Clear();
 
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EmployeeLogin(EMPLoginViewModel model, string returnUrl = null)
         {
-            //ViewData["ReturnUrl"] = returnUrl;
+            ViewData["ReturnUrl"] = returnUrl;
+            // Log Info
+            _logger.LogInformation("Employee logging in...");
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-                
+                // This doesn't count login failures towards account lockout!!
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true!!!!
+                //var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var activeUser = await _context.EmployeeModel.FirstOrDefaultAsync(m => m.Email == model.Email );
+                var result = await _signInManager.CheckPasswordSignInAsync(activeUser,model.Password,false);
                 if (result.Succeeded)
                 {
-                    // Extract User for Session Seed
-                    var Usess = await _context.EmployeeModel.FirstOrDefaultAsync((m => m.Email == model.Email));
-                    // Set Context
-                    HttpContext.Session.SetString(SessionUserId,Usess.Id);
-                    HttpContext.Session.SetString(SessionUserName, Usess.UserName);
-                    HttpContext.Session.SetString(SessionUserName, Usess.Email);
+                   await _signInManager.PasswordSignInAsync(activeUser,model.Password,false,false);
 
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation("In the success condition!!");
+                    // Session Information
+                    //var activeUser = await _context.AdminModel.FirstOrDefaultAsync(m => m.Email == model.Email);
+                    HttpContext.Session.SetString(SessionUserName, activeUser.UserName);
+                    HttpContext.Session.SetString(SessionUserEmail, activeUser.Email);
+                    HttpContext.Session.SetString(SessionUserId, activeUser.Id);
+                    
+                    // Log Info
+                    _logger.LogInformation("User logged in!");
+                    _logger.LogInformation("USING THE LOG DEBUGGER!!!!");
+                    // Return to Home
                     return RedirectToLocal(returnUrl);
-                   // return RedirectToAction(controllerName:"Employee", actionName:"EmployeeHome");
                 }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToAction(nameof(AccountController.LoginWith2fa), new { returnUrl, model.RememberMe });
-                }
+                
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToAction(nameof(AccountController.Lockout));
-                }
+                    _logger.LogWarning("Employee account locked out... See webmaster.");
+                    return RedirectToAction(nameof(Lockout));
+}
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+
+                    ModelState.AddModelError(string.Empty, "Invalid Username or Password...");
                     return View(model);
                 }
             }
-
+            _logger.LogInformation("Invalid State Condition!");
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-        
-        
+
+        private object Lockout()
+        {
+            throw new NotImplementedException();
+        }
+
+
+
 
         // GET Employee/EmployeeHome/
-        
+
         public async Task<IActionResult> EmployeeHome(string id = null)
         {
             // Extract UserID
             if (String.IsNullOrEmpty(id))
             {
-                id = HttpContext.Session.GetString(SessionUserId);
+                //id = HttpContext.Session.GetString(SessionUserId);
+                id = _userManager.GetUserId(User);
             }
 
             if (!String.IsNullOrEmpty(id))
@@ -236,15 +249,25 @@ namespace AXCEX_ONLINE.Controllers
             return View(employeeModel);
         }
 
-        // GET: EmployeeModels/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        // GET: Employee/EditEmployee/?
+        public async Task<IActionResult> EditEmployee(string id)
         {
             if (id == null)
             {
-                return NotFound();
+                // Find Id from session 
+                //id = HttpContext.Session.GetString(SessionUserId);
+                id = _userManager.GetUserId(User); // Much more secure way to store user Id
+                
+                if (String.IsNullOrEmpty(id))
+                {
+                    // No Id can be found
+                    _logger.LogWarning("No Employee ID can be found.");
+                    return NotFound();
+                }
             }
 
             var employeeModel = await _context.EmployeeModel.SingleOrDefaultAsync(m => m.Id == id);
+
             if (employeeModel == null)
             {
                 return NotFound();
@@ -265,13 +288,13 @@ namespace AXCEX_ONLINE.Controllers
         //[Authorize(Roles = "EmployeeUser")]
         //[Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ID,EMP_FNAME,EMP_LNAME,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] EmployeeModel employeeModel)
+        public async Task<IActionResult> EditEmployee(string id, [Bind("ID,EMP_FNAME,EMP_LNAME,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] EmployeeModel employeeModel)
         {
             if (id != employeeModel.Id)
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
                 try
