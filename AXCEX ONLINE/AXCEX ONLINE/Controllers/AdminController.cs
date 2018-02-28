@@ -98,7 +98,7 @@ namespace AXCEX_ONLINE.Controllers
                     // Session Information
                     HttpContext.Session.SetString(SessionUserName, user.UserName);
                     HttpContext.Session.SetString(SessionUserId, user.Id);
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("New Admin Account Created!");
 
                     // Email Confirmation
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -107,7 +107,7 @@ namespace AXCEX_ONLINE.Controllers
 
                     // Signin New User
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("New User Signed In.");
 
                     // Add to Role
                     IdentityResult RoleRes = await _userManager.AddToRoleAsync(user, MODEL_ROLE);
@@ -142,11 +142,14 @@ namespace AXCEX_ONLINE.Controllers
         public async Task<IActionResult> AdminLogin(AdminLoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            // Log Info
+            _logger.LogInformation("Admin logging in...");
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Admin_Uname, model.Password, model.RememberMe, lockoutOnFailure: false);
+
                 if (result.Succeeded)
                 {
                     // Session Information
@@ -156,20 +159,21 @@ namespace AXCEX_ONLINE.Controllers
                     HttpContext.Session.SetString(SessionUserId, admin.Id);
                     
                     // Log Info
-                    _logger.LogInformation("User logged in.");
-                    
+                    _logger.LogInformation("Admin logged in!");
+                    _logger.LogDebug("USING THE LOG DEBUGGER!!!!");
                     // Return to Home
                     return RedirectToLocal(returnUrl);
                 }
                 
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    _logger.LogWarning("Admin account locked out... See webmaster.");
                     return RedirectToAction(nameof(Lockout));
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+
+                    ModelState.AddModelError(string.Empty, "Invalid Username or Password...");
                     return View(model);
                 }
             }
