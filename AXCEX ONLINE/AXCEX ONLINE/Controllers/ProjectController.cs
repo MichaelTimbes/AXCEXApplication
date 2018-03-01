@@ -18,15 +18,18 @@ namespace AXCEX_ONLINE.Controllers
     {
         private readonly ProjectDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
         public ProjectController(ProjectDbContext context,
             UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<AccountController> logger
             )
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
             _logger = logger;
         }
 
@@ -54,8 +57,10 @@ namespace AXCEX_ONLINE.Controllers
             return View(projectModel);
         }
         #region CREATE_PROJECT
+
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
-        [AllowAnonymous]
+        
         public IActionResult CreateProject(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -63,8 +68,9 @@ namespace AXCEX_ONLINE.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
-        [AllowAnonymous]
+       
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProject(ProjectCreateViewClass model, string returnUrl = null)
         {

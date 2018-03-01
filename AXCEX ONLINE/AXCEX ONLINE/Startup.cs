@@ -57,7 +57,17 @@ namespace AXCEX_ONLINE
                 options.Cookie.Name = ".AXCEXONLINE.Session";
                 options.Cookie.HttpOnly = true;
             });
-            
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole("Administrator"));
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireEmployeeRole", policy => policy.RequireRole("Employee"));
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
