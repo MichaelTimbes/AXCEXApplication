@@ -52,7 +52,8 @@ namespace AXCEX_ONLINE.Controllers
             // Extract UserID
             if (String.IsNullOrEmpty(id))
             {
-                id = HttpContext.Session.GetString(SessionUserId);
+                //id = HttpContext.Session.GetString(SessionUserId);
+                id = _userManager.GetUserId(User);
             }
 
             if (!String.IsNullOrEmpty(id))
@@ -97,7 +98,7 @@ namespace AXCEX_ONLINE.Controllers
                 {
                     // Session Information
                     HttpContext.Session.SetString(SessionUserName, user.UserName);
-                    HttpContext.Session.SetString(SessionUserId, user.Id);
+                    //HttpContext.Session.SetString(SessionUserId, user.Id);
                     _logger.LogInformation("New Admin Account Created!");
 
                     // Email Confirmation
@@ -156,7 +157,7 @@ namespace AXCEX_ONLINE.Controllers
                     var admin = await _context.AdminModel.FirstOrDefaultAsync(m => m.UserName == model.Admin_Uname);
                     HttpContext.Session.SetString(SessionUserName, admin.UserName);
                     HttpContext.Session.SetString(SessionUserEmail, admin.Email);
-                    HttpContext.Session.SetString(SessionUserId, admin.Id);
+                    //HttpContext.Session.SetString(SessionUserId, admin.Id);
                     
                     // Log Info
                     _logger.LogInformation("Admin logged in!");

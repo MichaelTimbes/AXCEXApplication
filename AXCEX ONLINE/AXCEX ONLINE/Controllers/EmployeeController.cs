@@ -82,7 +82,7 @@ namespace AXCEX_ONLINE.Controllers
                     //var activeUser = await _context.AdminModel.FirstOrDefaultAsync(m => m.Email == model.Email);
                     HttpContext.Session.SetString(SessionUserName, activeUser.UserName);
                     HttpContext.Session.SetString(SessionUserEmail, activeUser.Email);
-                    HttpContext.Session.SetString(SessionUserId, activeUser.Id);
+                    //HttpContext.Session.SetString(SessionUserId, activeUser.Id); // Particularly Sensitive Data- Only Use for Debug
                     
                     // Log Info
                     _logger.LogInformation("User logged in!");
