@@ -21,15 +21,14 @@ C:\Users\micha\Documents\GitHubProjects\asp-net-projs\AXCEX ONLINE\AXCEX ONLINE\
 C:\Users\micha\Documents\GitHubProjects\asp-net-projs\AXCEX ONLINE\AXCEX ONLINE\bin\Debug\netcoreapp2.0\AXCEX ONLINE.pdb
 C:\Users\micha\Documents\GitHubProjects\asp-net-projs\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.dll
 C:\Users\micha\Documents\GitHubProjects\asp-net-projs\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.pdb
-C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.csproj.CoreCompileInputs.cache
-C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
-C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.AssemblyInfoInputs.cache
-C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.AssemblyInfo.cs
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\bin\Debug\netcoreapp2.0\AXCEX ONLINE.deps.json
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\bin\Debug\netcoreapp2.0\AXCEX ONLINE.runtimeconfig.json
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\bin\Debug\netcoreapp2.0\AXCEX ONLINE.runtimeconfig.dev.json
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\bin\Debug\netcoreapp2.0\AXCEX ONLINE.dll
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\bin\Debug\netcoreapp2.0\AXCEX ONLINE.pdb
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.csproj.CoreCompileInputs.cache
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.AssemblyInfoInputs.cache
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.AssemblyInfo.cs
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.dll
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.pdb
-C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.csprojResolveAssemblyReference.cache

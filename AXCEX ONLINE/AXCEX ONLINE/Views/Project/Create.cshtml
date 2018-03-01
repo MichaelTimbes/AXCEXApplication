@@ -1,0 +1,41 @@
+﻿@model AXCEX_ONLINE.Models.ProjectModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>ProjectModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProjectName" class="control-label"></label>
+                <input asp-for="ProjectName" class="form-control" />
+                <span asp-validation-for="ProjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer" class="control-label"></label>
+                <input asp-for="Customer" class="form-control" />
+                <span asp-validation-for="Customer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjBudget" class="control-label"></label>
+                <input asp-for="ProjBudget" class="form-control" />
+                <span asp-validation-for="ProjBudget" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjCurentCost" class="control-label"></label>
+                <input asp-for="ProjCurentCost" class="form-control" />
+                <span asp-validation-for="ProjCurentCost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+

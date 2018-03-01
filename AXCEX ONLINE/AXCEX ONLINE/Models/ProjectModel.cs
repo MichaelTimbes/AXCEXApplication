@@ -11,23 +11,27 @@ namespace AXCEX_ONLINE.Models
         // Project Model Based on the Db Design
 
         // PK
-        public int ProjID { get; set; }
-        
+        [Column(name:"ProjectID")]
+        public int ID { get; set; }
+
+        [Column(name: "ProjectName")]
+        public string ProjectName { get; set; }
+
         // ApplicationUserID FK -> Application User
         // ApplicationUser Navigation
-        public int ApplicationUserID { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        [Column(name: "CustomerName")]
+        public string Customer { get; set; }
 
         // Employee's Assigned to the Project
         public ICollection<EmployeeModel> AssignedEmployees { get; set; }
 
         // Project's Budget
         [Column(TypeName = "money")]
-        public double ProjBudget { get; set; }
+        public decimal ProjBudget { get; set; }
 
         // Project's Current Cost
         [Column(TypeName = "money")]
-        public double ProjCurentCost { get; set; }
+        public decimal ProjCurentCost { get; set; }
 
 
     }

@@ -35,6 +35,10 @@ namespace AXCEX_ONLINE
             //options.UseSqlite("Data Source=main.db"));
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDbContext<ProjectDbContext>(options =>
+            //options.UseSqlite("Data Source=main.db"));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
