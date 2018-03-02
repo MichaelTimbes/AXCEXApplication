@@ -232,7 +232,7 @@ namespace AXCEX_ONLINE.Controllers
         {
             return View();
         }
-
+        
         // POST: EmployeeModels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -249,7 +249,12 @@ namespace AXCEX_ONLINE.Controllers
             return View(employeeModel);
         }
 
+
+
+        #region EDIT_METHOD
         // GET: Employee/EditEmployee/?
+        [Authorize(Roles = "Employee")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> EditEmployee(string id)
         {
             if (id == null)
@@ -275,18 +280,13 @@ namespace AXCEX_ONLINE.Controllers
             return View(employeeModel);
         }
 
-        
-        private bool EmployeeModelExists(string id)
-        {
-            return _context.EmployeeModel.Any(e => e.Id == id);
-        }
-
+      
         // POST: EmployeeModels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[Authorize(Roles = "EmployeeUser")]
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Employee")]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditEmployee(string id, [Bind("ID,EMP_FNAME,EMP_LNAME,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] EmployeeModel employeeModel)
         {
@@ -317,7 +317,10 @@ namespace AXCEX_ONLINE.Controllers
             }
             return View(employeeModel);
         }
+        #endregion EDIT_METHOD
 
+        #region DELETE_METHOD
+        [Authorize(Roles = "Administrator")]
         // GET: EmployeeModels/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
@@ -337,9 +340,10 @@ namespace AXCEX_ONLINE.Controllers
         }
 
         // POST: EmployeeModels/Delete/5
+        // Route Masking for Delete Confirmation
         [HttpPost, ActionName("Delete")]
         // Only An Admin can delete an Employee
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
@@ -348,10 +352,18 @@ namespace AXCEX_ONLINE.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        #endregion DELETE_METHOD
+
         // GET: EmployeeModels
         public async Task<IActionResult> Index()
         {
             return View(await _context.EmployeeModel.ToListAsync());
         }
+        #region HELPER_METHODS
+        private bool EmployeeModelExists(string id)
+        {
+            return _context.EmployeeModel.Any(e => e.Id == id);
+        }
+        #endregion HELPER_METHODS
     }
 }

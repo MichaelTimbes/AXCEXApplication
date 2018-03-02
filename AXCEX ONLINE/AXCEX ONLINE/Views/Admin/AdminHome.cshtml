@@ -1,10 +1,13 @@
 ﻿@model AXCEX_ONLINE.Models.AdminModel
 @{
-    ViewData["Title"] = "AdminHome";
+    ViewData["Title"] = "Admin Home";
 }
 
-<h2> @Model.UserName Home</h2>
-Hello, @Model.UserName .
+<h2> @ViewData["Title"]</h2>
+
+    <p> 
+        Hello, @Model.UserName.
+    </p>
 <br/>
 <b>Add a Project:</b>
 <br />

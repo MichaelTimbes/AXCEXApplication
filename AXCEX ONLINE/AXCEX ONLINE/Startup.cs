@@ -61,6 +61,7 @@ namespace AXCEX_ONLINE
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole("Administrator"));
+                options.AddPolicy("RequireEmployeeRole", policy => policy.RequireRole("Employee"));
             });
 
             services.AddAuthorization(options =>
