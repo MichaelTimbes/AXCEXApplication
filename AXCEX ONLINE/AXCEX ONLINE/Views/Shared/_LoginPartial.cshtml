@@ -11,15 +11,15 @@
             <li>
                 @if (User.IsInRole("Employee"))
                 {
-                    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage"> Employee: @UserManager.GetUserName(User)</a>
+                    <a asp-area="" asp-controller="Employee" asp-action="EditEmployee" title="Edit Employee"> Employee Profile</a>
                 }
                 else if (User.IsInRole("Administrator") )
                 {
-                    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">ADMIN ROLE</a>
+                    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Admin Profile</a>
                 }
                 else
                 {
-                    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Customer Profile</a>
                 }
             </li>
             <li>

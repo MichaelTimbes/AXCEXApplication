@@ -253,31 +253,22 @@ namespace AXCEX_ONLINE.Controllers
 
         #region EDIT_METHOD
         // GET: Employee/EditEmployee/?
-        [Authorize(Roles = "Employee")]
-        [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> EditEmployee(string id)
+        //[Authorize(Roles = "Employee")]
+        [Authorize(Roles = "Administrator,Employee")]
+        public async Task<IActionResult> EditEmployee(string returnUrl = null)
         {
-            if (id == null)
+            ViewData["ReturnUrl"] = returnUrl;
+            var user = await _userManager.GetUserAsync(User);
+            var userContext = _context.EmployeeModel.Where(m => m.Id == user.Id).First();
+            var updateForm = new EMPEditViewModel
             {
-                // Find Id from session 
-                //id = HttpContext.Session.GetString(SessionUserId);
-                id = _userManager.GetUserId(User); // Much more secure way to store user Id
-                
-                if (String.IsNullOrEmpty(id))
-                {
-                    // No Id can be found
-                    _logger.LogWarning("No Employee ID can be found.");
-                    return NotFound();
-                }
-            }
-
-            var employeeModel = await _context.EmployeeModel.SingleOrDefaultAsync(m => m.Id == id);
-
-            if (employeeModel == null)
-            {
-                return NotFound();
-            }
-            return View(employeeModel);
+                Employee_fname = userContext.EMP_FNAME,
+                Employee_lname = userContext.EMP_LNAME,
+                Employee_userName = userContext.UserName,
+                Email = userContext.Email,
+                PhoneNumber = userContext.PhoneNumber
+            };
+            return View(updateForm);
         }
 
       
@@ -285,37 +276,77 @@ namespace AXCEX_ONLINE.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles = "Employee")]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Employee")]
+        [Authorize(Roles = "Administrator,Employee")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditEmployee(string id, [Bind("ID,EMP_FNAME,EMP_LNAME,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] EmployeeModel employeeModel)
+        public async Task<IActionResult> EditEmployee(EMPEditViewModel model)
         {
-            if (id != employeeModel.Id)
-            {
-                return NotFound();
-            }
-            
+
             if (ModelState.IsValid)
             {
-                try
+                var user = await _userManager.GetUserAsync(User);
+
+                var email = user.Email;
+                if (model.Email != email)
                 {
-                    _context.Update(employeeModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EmployeeModelExists(employeeModel.Id))
+                    var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
+                    if (!setEmailResult.Succeeded)
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        throw new ApplicationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                var phoneNumber = user.PhoneNumber;
+                if (model.PhoneNumber != phoneNumber)
+                {
+                    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
+                    if (!setPhoneResult.Succeeded)
+                    {
+                        throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                    }
+                }
+
+                var Uname = user.UserName;
+                if (model.Employee_userName != Uname)
+                {
+                    var setUnameResult = await _userManager.SetUserNameAsync(user, model.Employee_userName);
+                    if (!setUnameResult.Succeeded)
+                    {
+                        throw new ApplicationException($"Unexpected error occurred setting new user name for user with ID '{user.Id}'.");
+                    }
+                }
+                    
+                if (user != null)
+                {
+                    var userUpdate = _context.EmployeeModel.Where(m => m.Id == user.Id).First();
+                    userUpdate.EMP_FNAME = model.Employee_fname;
+                    userUpdate.EMP_LNAME = model.Employee_lname;
+                    userUpdate.Email = model.Email;
+                    userUpdate.PhoneNumber = model.PhoneNumber;
+
+                    // UPDATE THE EMPLOYEE
+                    _context.EmployeeModel.Update(userUpdate);
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogCritical(e.ToString());
+
+                        return View();
+                    }
+                    return RedirectToAction(actionName: "EmployeeHome");
+
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
-            return View(employeeModel);
+            // Something went terribly wrong
+            _logger.LogCritical("Something is wrong with the model state in Employee controller-EditEmployee.");
+            return View();
         }
         #endregion EDIT_METHOD
 
