@@ -3,8 +3,10 @@
 @{
     ViewData["Title"] = "ProjectDetails";
 }
-
-<h2>ProjectDetails</h2>
+<!-- Inject for different views based on role.-->
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<h2>Project Details</h2>
 
 <div>
     <h4>ProjectModel</h4>
@@ -36,7 +38,19 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+@if (User.IsInRole("Administrator"))
+{
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+
+else
+{
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}

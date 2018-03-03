@@ -1,17 +1,18 @@
-﻿@model ProjectCreateViewClass
+﻿@model AXCEX_ONLINE.Models.ProjectViewModels.ProjectEditViewClass
 
 @{
-    ViewData["Title"] = "CreateProject";
+    ViewData["Title"] = "EditProject";
 }
-<!-- ONLY ADMIN CAN CREATE PROJECTS-->
-<h2>CreateProject</h2>
+<!-- ONLY ADMIN CAN EDIT A PROJECT -->
+<h2>EditProject</h2>
 
 <h4>ProjectModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateProject">
+        <form asp-action="EditProject">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
             <div class="form-group">
                 <label asp-for="ProjectName" class="control-label"></label>
                 <input asp-for="ProjectName" class="form-control" />
@@ -33,6 +34,13 @@
                 <span asp-validation-for="ProjCost" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="ActiveProj " /> @Html.DisplayNameFor(model => model.ActiveProj)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
                 <label asp-for="ProjStart" class="control-label"></label>
                 <input asp-for="ProjStart" class="form-control" />
                 <span asp-validation-for="ProjStart" class="text-danger"></span>
@@ -43,7 +51,7 @@
                 <span asp-validation-for="ProjEnd" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>

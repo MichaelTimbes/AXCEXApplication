@@ -40,7 +40,8 @@ namespace AXCEX_ONLINE.Controllers
         }
 
         // GET: ProjectModels/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [Authorize(Roles ="Administrator")]
+        public async Task<IActionResult> ProjectDetails(int? id)
         {
             if (id == null)
             {
@@ -56,6 +57,80 @@ namespace AXCEX_ONLINE.Controllers
 
             return View(projectModel);
         }
+        #region EDIT_PROJECT
+        //GET
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
+        public IActionResult EditProject(int? id)
+        {
+            // Verify that id is not Null
+            if (id == null)
+            {
+                return View();
+            }
+            else
+            {
+                var ProjectContext = _context.ProjectModel.Where(p => p.ID == id).First();
+                if (ProjectContext != null)
+                {
+                    var modelView = new ProjectEditViewClass
+                    {
+
+                        ProjectName = ProjectContext.ProjectName,
+                        Custid = ProjectContext.Customer,
+                        ActiveProj = ProjectContext.IsActive,
+                        ProjBudget = ProjectContext.ProjBudget,
+                        ProjCost = ProjectContext.ProjCurentCost,
+                        ProjStart = ProjectContext.StartDate,
+                        ProjEnd = ProjectContext.EndDate
+                    };
+                    return View(model: modelView);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+        }
+        //POST
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> EditProject(ProjectEditViewClass model, int? id)
+        {
+            
+            var UpdateModel = await _context.ProjectModel.Where(m => m.ID == id).FirstOrDefaultAsync();
+            // Verify it exists
+            if (UpdateModel != null)
+            {
+
+                UpdateModel.ProjectName = model.ProjectName;
+                UpdateModel.IsActive = model.ActiveProj;
+                UpdateModel.ProjBudget = model.ProjBudget;
+                UpdateModel.ProjCurentCost = model.ProjCost;
+                UpdateModel.Customer = model.Custid;
+                UpdateModel.StartDate = model.ProjStart;
+                UpdateModel.EndDate = model.ProjEnd;
+                try
+                {
+                    _context.ProjectModel.Update(UpdateModel);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return RedirectToAction(nameof(AllProjectsPartial));
+            }
+           
+                _logger.LogError($"NO VALUE FOUND FOR MODEL WITH ID '{id}'");
+                return View(model);
+          
+        }
+        #endregion EDIT_PROJECT
+
+        /* 
+         */
+
         #region CREATE_PROJECT
 
         [Authorize(Roles = "Administrator")]
