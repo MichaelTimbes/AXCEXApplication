@@ -5,11 +5,15 @@
 
 <h2> @ViewData["Title"]</h2>
 
-    <p> 
-        Hello, @Model.UserName.
-    </p>
-<br/>
+<p>
+    Hello, @Model.UserName.
+</p>
+<br />
 <b>Add a Project:</b>
 <br />
 <a asp-controller="Project" asp-action="CreateProject">New Project</a>
+<br/>
+<b>View All Projects:</b>
+<br />
+<a asp-controller="Project" asp-action="AllProjectsPartial">View</a>
 

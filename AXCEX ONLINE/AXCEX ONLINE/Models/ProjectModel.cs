@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,6 +33,20 @@ namespace AXCEX_ONLINE.Models
         // Project's Current Cost
         [Column(TypeName = "money")]
         public decimal ProjCurentCost { get; set; }
+
+        // Is the Project Active?
+        [Column(name: "ActiveProject")]
+        public bool IsActive { get; set; }
+
+        // Start Date of the Project
+        [Column(name: "StartDate")]
+        [DataType(DataType.Date)]
+        public DateTime StartDate { get; set; }
+
+        // Start Date of the Project
+        [Column(name: "EndDate")]
+        [DataType(DataType.Date)]
+        public DateTime EndDate { get; set; }
 
 
     }

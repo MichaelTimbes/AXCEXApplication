@@ -34,7 +34,7 @@ namespace AXCEX_ONLINE.Controllers
         }
 
         // GET: ProjectModels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> AllProjectsPartial()
         {
             return View(await _context.ProjectModel.ToListAsync());
         }
@@ -86,23 +86,19 @@ namespace AXCEX_ONLINE.Controllers
                     ProjectName = model.ProjectName,
                     Customer = model.Custid,
                     ProjBudget = model.ProjBudget,
-                    ProjCurentCost = model.ProjCost
+                    ProjCurentCost = model.ProjCost,
+                    IsActive = model.ActiveProj,
+                    StartDate = model.ProjStart,
+                    EndDate = model.ProjEnd
                 };
+
                 // Try to add to the database
                
                     _context.Add(project);
                     await _context.SaveChangesAsync();
                 
-                // If the project couldn't be added- throw exception
-                //catch(DbUpdateException e)
-                //{
-                //    // Log Error
-                //    _logger.LogError(exception: e, message:"Could not add Project to database.");
-                //    // Return the Form
-                //    return View();
-                //}
                 // Redirect to the details if success.
-                return RedirectToAction(actionName: "Details", routeValues: new { id = project.ID });
+                return RedirectToAction(actionName: "ProjectDetails", routeValues: new { id = project.ID });
 
             }
             _logger.LogCritical("Something went wrong in creating a new project.");
@@ -127,7 +123,7 @@ namespace AXCEX_ONLINE.Controllers
             {
                 _context.Add(projectModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AllProjectsPartial));
             }
             return View(projectModel);
         }
@@ -178,7 +174,7 @@ namespace AXCEX_ONLINE.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AllProjectsPartial));
             }
             return View(projectModel);
         }
@@ -209,7 +205,7 @@ namespace AXCEX_ONLINE.Controllers
             var projectModel = await _context.ProjectModel.SingleOrDefaultAsync(m => m.ID == id);
             _context.ProjectModel.Remove(projectModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AllProjectsPartial));
         }
 
         private bool ProjectModelExists(int id)

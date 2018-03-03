@@ -33,6 +33,16 @@
                 <span asp-validation-for="ProjCost" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ProjStart" class="control-label"></label>
+                <input asp-for="ProjStart" class="form-control" />
+                <span asp-validation-for="ProjStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjEnd" class="control-label"></label>
+                <input asp-for="ProjEnd" class="form-control" />
+                <span asp-validation-for="ProjEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>

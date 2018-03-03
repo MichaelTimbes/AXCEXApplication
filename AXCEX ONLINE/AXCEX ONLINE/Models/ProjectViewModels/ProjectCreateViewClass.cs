@@ -27,5 +27,17 @@ namespace AXCEX_ONLINE.Models.ProjectViewModels
         [DataType(DataType.Currency)]
         public decimal ProjCost { get; set; }
 
+        public bool ActiveProj = true;
+
+        [Required]
+        [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
+        public DateTime ProjStart { get; set; }
+
+
+        [Required]
+        [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
+        public DateTime ProjEnd { get; set; }
     }
 }
