@@ -172,20 +172,30 @@ namespace AXCEX_ONLINE.Controllers
         public async Task<IActionResult> RegisterEmployee(EMPRegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            _logger.LogDebug("Checking Model State");
             if (ModelState.IsValid)
             {
+                _logger.LogDebug("Model is Valid");
+                _logger.LogDebug("Creating Employee");
                 var user = new EmployeeModel
                 {
                    
                     EMP_FNAME = model.FNAME,
+                    EMPID = model.Empid,
                     EMP_LNAME = model.LNAME,
                     UserName = model.FNAME,
                     Email = model.Email
                 };
+                _logger.LogDebug("Creating User");
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
+                    //_logger.LogDebug("Saving Employee");
+                    //_context.EmployeeModel.Add(user);
+                    //await _context.SaveChangesAsync();
+                    // Add to Role
+                    IdentityResult RoleRes = await _userManager.AddToRoleAsync(user, MODEL_ROLE);
                     // Session Information
                     HttpContext.Session.SetString(SessionUserName,user.UserName);
                     HttpContext.Session.SetString(SessionUserId, user.Id);
@@ -200,18 +210,19 @@ namespace AXCEX_ONLINE.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
 
-                    // Add to Role
-                    IdentityResult RoleRes = await _userManager.AddToRoleAsync(user, MODEL_ROLE);
+                    
                    
                     // If All Went Well- Go to Employee Home Page
                     return RedirectToLocal(returnUrl);
                 }
+                _logger.LogDebug("Couldn't Create User");
                 // Else
                 RedirectToAction(controllerName: "Home", actionName: "Index");
             }
 
             // If we got this far, something failed, redisplay form
             //return View(model);
+            _logger.LogDebug("Model Invalid in Register Employee");
             return RedirectToAction(controllerName: "Home", actionName: "About");
         }
 

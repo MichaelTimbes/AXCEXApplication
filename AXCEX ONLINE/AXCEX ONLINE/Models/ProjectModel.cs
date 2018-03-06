@@ -24,7 +24,9 @@ namespace AXCEX_ONLINE.Models
         public string Customer { get; set; }
 
         // Employee's Assigned to the Project
-        public ICollection<EmployeeModel> AssignedEmployees { get; set; }
+        //public string IdendityUserID { get; set; }
+        //public ICollection<ApplicationUser> AssignedEmployees { get; set; }
+
 
         // Project's Budget
         [Column(TypeName = "money")]

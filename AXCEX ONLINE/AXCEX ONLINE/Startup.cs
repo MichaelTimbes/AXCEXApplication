@@ -85,9 +85,11 @@ namespace AXCEX_ONLINE
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseSession();
+            
             
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseAuthentication();
 

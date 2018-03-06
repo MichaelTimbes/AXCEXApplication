@@ -31,5 +31,9 @@ namespace AXCEX_ONLINE.Models.EmployeeViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Assigned Employee Number")]
+        public int Empid { get; set; }
     }
 }

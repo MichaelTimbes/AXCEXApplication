@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace AXCEXONLINE.Migrations
+namespace AXCEX_ONLINE.Data.Migrations
 {
-    public partial class ChangesDtypeCost : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

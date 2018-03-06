@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AXCEX_ONLINE.Models.ProjectViewModels
 {
-    public class ProjectEmplyViewClass
+    public class ProjectDetailsViewClass
     {
         [Display(Name = "Project Name")]
         public string ProjectName { get; set; }
@@ -31,8 +30,5 @@ namespace AXCEX_ONLINE.Models.ProjectViewModels
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         public DateTime ProjEnd { get; set; }
-
-        [Display(Name = "Employees Assigned")]
-        public List<EmployeeModel> Employees { get; set; }
     }
 }

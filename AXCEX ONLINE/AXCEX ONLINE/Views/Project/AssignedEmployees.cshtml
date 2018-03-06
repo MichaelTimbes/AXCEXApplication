@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ProjectEmpsViewModel>
+
+@{
+    ViewData["Title"] = "CreateProject";
+}
+<h2>@ViewData["Message"]</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee_ID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee_Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee_ID)
+                </td>
+
+
+                <td>
+
+                    <form asp-controller="Project" asp-action="DelAssignedEmployee" method="post" role="form">
+                        <div>
+                            <button type="submit" name="id" value="@item.Assignment_ID">Remove</button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

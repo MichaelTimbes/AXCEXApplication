@@ -20,52 +20,20 @@ namespace AXCEXONLINE.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AXCEX_ONLINE.Models.EmployeeModel", b =>
+            modelBuilder.Entity("AXCEX_ONLINE.Models.ProjectAssignment", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AccessFailedCount");
+                    b.Property<int>("EmpKey");
 
-                    b.Property<string>("ConcurrencyStamp");
+                    b.Property<int>("ProjKey");
 
-                    b.Property<int>("EMPID");
+                    b.Property<string>("authorized_assignment");
 
-                    b.Property<string>("EMP_FNAME");
+                    b.HasKey("ID");
 
-                    b.Property<string>("EMP_LNAME");
-
-                    b.Property<string>("Email");
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail");
-
-                    b.Property<string>("NormalizedUserName");
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<int?>("ProjectModelID");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectModelID");
-
-                    b.ToTable("EmployeeModel");
+                    b.ToTable("ProjectAssignments");
                 });
 
             modelBuilder.Entity("AXCEX_ONLINE.Models.ProjectModel", b =>
@@ -98,13 +66,6 @@ namespace AXCEXONLINE.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("ProjectModel");
-                });
-
-            modelBuilder.Entity("AXCEX_ONLINE.Models.EmployeeModel", b =>
-                {
-                    b.HasOne("AXCEX_ONLINE.Models.ProjectModel")
-                        .WithMany("AssignedEmployees")
-                        .HasForeignKey("ProjectModelID");
                 });
 #pragma warning restore 612, 618
         }
