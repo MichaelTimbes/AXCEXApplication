@@ -1,67 +1,74 @@
 ﻿@model IEnumerable<AXCEX_ONLINE.Models.ProjectModel>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a role="button" class="btn btn-info" asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProjectName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Customer)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProjBudget)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProjCurentCost)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsActive)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EndDate)
-                </th>
-            <th></th>
-        </tr>
-    </thead>
+    <!--<thead>-->
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjBudget)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjCurentCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th></th>
+    </tr>
+    <!--</thead>-->
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjBudget)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjCurentCost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                <a asp-action="EditProject" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>|
-                <a asp-controller="Project" asp-action="AssignEmployee" asp-route-id="@item.ID">Assign Employees</a> |
-                <a asp-controller="Project" asp-action="AssignedEmployees" asp-route-id="@item.ID">View Assigned</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjBudget)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjCurentCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    <div class="btn-group-vertical">
+                        <a role="button" class="btn btn-primary" asp-action="EditProject" asp-route-id="@item.ID">Edit</a>
+                        <a role="button" class="btn btn-info" asp-action="ProjectDetails" asp-route-id="@item.ID">Details</a>
+                        <a role="button" class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group-vertical">
+                        <a role="button" class="btn btn-primary" asp-controller="Project" asp-action="AssignEmployee" asp-route-id="@item.ID">Assign Employees</a>
+                        <a role="button" class="btn btn-secondary" asp-controller="Project" asp-action="AssignedEmployees" asp-route-id="@item.ID">View Assigned</a>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

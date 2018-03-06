@@ -6,16 +6,56 @@
 <h2> @ViewData["Title"]</h2>
 
 <p>
-    Hello, @Model.UserName.
+    Hello, @Model.UserName!
 </p>
-<br />
-<b>Add a Project:</b>
-<br />
-<a asp-controller="Project" asp-action="CreateProject">New Project</a>
-<br />
-<b>View All Projects:</b>
-<br />
-<a asp-controller="Project" asp-action="AllProjectsPartial">View</a>
+
+
+
+<div class="row">
+    <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header text-info">Project Management Section:</div>
+        <div class="card-body">
+            <h5 class="card-title">Project Management</h5>
+            <p class="card-text">Collection of links to manage project related information. You can create, edit, and delete projects in the 
+            project list.</p>
+            <div class="list">
+                <ul>
+                    <li><a class="text-success" asp-controller="Project" asp-action="CreateProject">Create Project</a></li>
+                    <li><a class="text-success" asp-controller="Project" asp-action="AllProjectsPartial">Project List</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header text-info">Employee Management Section:</div>
+        <div class="card-body">
+            <h5 class="card-title">Employee Management</h5>
+            <p class="card-text">Collection of links to create, edit, and delete employees.</p>
+            <div class="list">
+                <ul>
+                    <li><a class="text-success" asp-controller="Project" asp-action="CreateProject">Create Project</a></li>
+                    <li><a class="text-success" asp-controller="Project" asp-action="AllProjectsPartial">Project List</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header text-info">Customer Management Section:</div>
+        <div class="card-body">
+            <h5 class="card-title">Customer Management</h5>
+            <p class="card-text">Collection of links to create, edit, and delete customers.</p>
+            <div class="list">
+                <ul>
+                    <li><a class="text-success" asp-controller="Project" asp-action="CreateProject">Create Project</a></li>
+                    <li><a class="text-success" asp-controller="Project" asp-action="AllProjectsPartial">Project List</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 

@@ -41,9 +41,9 @@
 @if (User.IsInRole("Administrator"))
 {
     <div>
-        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="EditProject" asp-route-id="@Model.ID">Edit</a> |
+        <a asp-controller="Project" asp-action="AssignedEmployees" asp-route-id="@Model.ID">View Assigned</a>|
+        <a asp-controller="Project" asp-action="AllProjectsPartial">Project List</a>
     </div>
 }
 
@@ -51,6 +51,7 @@ else
 {
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        <!-- PUT A HARMLESS VIEW HERE-->
+        <a asp-controller="Project" asp-action="AllProjectsPartial">Project List</a>
     </div>
 }
