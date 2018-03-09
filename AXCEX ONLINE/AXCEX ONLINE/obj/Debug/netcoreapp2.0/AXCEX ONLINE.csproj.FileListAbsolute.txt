@@ -32,4 +32,3 @@ C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\D
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.AssemblyInfo.cs
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.dll
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.pdb
-C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEX ONLINE.csprojResolveAssemblyReference.cache

@@ -22,6 +22,7 @@ namespace AXCEX_ONLINE.Controllers
     public class EmployeeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ProjectDbContext _projectcontext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -33,7 +34,8 @@ namespace AXCEX_ONLINE.Controllers
 
         public EmployeeController(
             ApplicationDbContext context,
-            UserManager<ApplicationUser> userManager,
+            ProjectDbContext projectcontext,
+        UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger)
@@ -43,8 +45,43 @@ namespace AXCEX_ONLINE.Controllers
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _projectcontext = projectcontext;
         }
+        #region VIEW_ASSIGNED_PROJECTS
+        [HttpGet]
+        public async Task<IActionResult> ViewAssignedProjects(int? id)
+        {
+            if (id == null)
+            {
+                // Use Current User
+                var USR = await _userManager.GetUserAsync(User);
+                // Find FK for User Id
+                var emp = _context.EmployeeModel.Where(e => e.Id == USR.Id);
+                // Pull Employee Id
+                id = emp.First().EMPID;
+            }
+            // Find all Assignments
+            var assigned = _projectcontext.ProjectAssignments.Where(a => a.EmpKey == id);
+            var ViewList = new List<EmployeeViewAssignedProjectsVM>();
 
+            // Build
+            foreach (ProjectAssignment p in assigned)
+            {
+                var Proj = _projectcontext.ProjectModel.Where(pro => pro.ID == p.ProjKey).First();
+                var temp = new EmployeeViewAssignedProjectsVM
+                {
+                    Project_Name = Proj.ProjectName,
+                    Assigned_By = p.authorized_assignment,
+                    Start_Date = Proj.StartDate,
+                    Due_Date = Proj.EndDate,
+                };
+                ViewList.Add(temp);
+            }
+            return View(ViewList);
+        }
+        #endregion VIEW_ASSIGNED_PROJECTS
+
+      
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> EmployeeLogin(string returnUrl = null)
@@ -177,6 +214,22 @@ namespace AXCEX_ONLINE.Controllers
             {
                 _logger.LogDebug("Model is Valid");
                 _logger.LogDebug("Creating Employee");
+
+                var checkid = _context.EmployeeModel.Where(e => (e.EMPID == model.Empid));
+                var checkemail = _context.EmployeeModel.Where(e => (e.Email == model.Email));
+
+                if (checkid.Count() > 0)
+                {
+                    ViewData["Error"] = "Employee ID Already Exists";
+                    return View(model);
+                }
+
+                if (checkemail.Count() > 0)
+                {
+                    ViewData["Error"] = "Employee Email Already Exists";
+                    return View(model);
+                }
+
                 var user = new EmployeeModel
                 {
                    
@@ -186,14 +239,13 @@ namespace AXCEX_ONLINE.Controllers
                     UserName = model.FNAME,
                     Email = model.Email
                 };
+
                 _logger.LogDebug("Creating User");
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    //_logger.LogDebug("Saving Employee");
-                    //_context.EmployeeModel.Add(user);
-                    //await _context.SaveChangesAsync();
+                   
                     // Add to Role
                     IdentityResult RoleRes = await _userManager.AddToRoleAsync(user, MODEL_ROLE);
                     // Session Information
@@ -221,9 +273,8 @@ namespace AXCEX_ONLINE.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            //return View(model);
             _logger.LogDebug("Model Invalid in Register Employee");
-            return RedirectToAction(controllerName: "Home", actionName: "About");
+            return RedirectToAction(controllerName: "Home", actionName: "Index");
         }
 
         private IActionResult RedirectToLocal(string returnUrl)

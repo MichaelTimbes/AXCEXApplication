@@ -12,34 +12,34 @@
                 @if (User.IsInRole("Employee"))
         {
         <li class="nav-item">
-            <a class="nav-link" asp-area="" asp-controller="Employee" asp-action="EmployeeHome"> Employee Home</a>
+            <a class="nav-link" asp-area="" asp-controller="Employee" asp-action="EmployeeHome" title="Employee Home Page"> Employee Home</a>
         </li>
         <a class="nav-link" asp-area="" asp-controller="Employee" asp-action="EditEmployee" title="Edit Employee"> Employee Profile</a>
 }
 else if (User.IsInRole("Administrator"))
 {
-            <li class="nav-item">
-            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="AdminHome"> Admin Home</a>
-            </li>
-
-            <a class="nav-link" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Admin Profile</a>
-
-            }
-            else
-            {
-            <a class="nav-link" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Customer Profile</a>
-            }
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="AdminHome" title="Admin Home Page"> Admin Home</a>
         </li>
         <li class="nav-item">
-            <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
+            <a class="nav-link" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage Admin">Admin Profile</a>
         </li>
+}
+else
+{
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage Customer">Customer Profile</a>
+        </li>
+            }
+
+        <li><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout" title="Log Out">Log Out</a></li>
         </ul>
     </form>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+        <li><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register" title="Register">Register</a></li>
+        <li><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login" title="Login">Log in</a></li>
     </ul>
 }

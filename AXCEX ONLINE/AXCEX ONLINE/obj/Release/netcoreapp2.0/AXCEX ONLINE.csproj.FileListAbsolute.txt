@@ -1,0 +1,12 @@
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Release\netcoreapp2.0\AXCEX ONLINE.csprojResolveAssemblyReference.cache
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Release\netcoreapp2.0\AXCEX ONLINE.csproj.CoreCompileInputs.cache
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Release\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Release\netcoreapp2.0\AXCEX ONLINE.AssemblyInfoInputs.cache
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Release\netcoreapp2.0\AXCEX ONLINE.AssemblyInfo.cs
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\bin\Release\netcoreapp2.0\AXCEXONLINE.deps.json
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\bin\Release\netcoreapp2.0\AXCEXONLINE.runtimeconfig.json
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\bin\Release\netcoreapp2.0\AXCEXONLINE.runtimeconfig.dev.json
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\bin\Release\netcoreapp2.0\AXCEXONLINE.dll
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\bin\Release\netcoreapp2.0\AXCEXONLINE.pdb
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Release\netcoreapp2.0\AXCEXONLINE.dll
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Release\netcoreapp2.0\AXCEXONLINE.pdb

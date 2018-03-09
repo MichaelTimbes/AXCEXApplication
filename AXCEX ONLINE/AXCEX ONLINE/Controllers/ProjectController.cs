@@ -307,7 +307,6 @@ namespace AXCEX_ONLINE.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-       
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProject(ProjectCreateViewClass model, string returnUrl = null)
         {
@@ -343,80 +342,81 @@ namespace AXCEX_ONLINE.Controllers
         }
         #endregion CREATE_PROJECT
 
-        // GET: ProjectModels/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //// GET: ProjectModels/Create
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // POST: ProjectModels/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ApplicationUserID,ProjBudget,ProjCurentCost")] ProjectModel projectModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(projectModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(AllProjectsPartial));
-            }
-            return View(projectModel);
-        }
+        //// POST: ProjectModels/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("ID,ApplicationUserID,ProjBudget,ProjCurentCost")] ProjectModel projectModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(projectModel);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(AllProjectsPartial));
+        //    }
+        //    return View(projectModel);
+        //}
 
         // GET: ProjectModels/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var projectModel = await _context.ProjectModel.SingleOrDefaultAsync(m => m.ID == id);
-            if (projectModel == null)
-            {
-                return NotFound();
-            }
-            return View(projectModel);
-        }
+        //    var projectModel = await _context.ProjectModel.SingleOrDefaultAsync(m => m.ID == id);
+        //    if (projectModel == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(projectModel);
+        //}
 
-        // POST: ProjectModels/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ApplicationUserID,ProjBudget,ProjCurentCost")] ProjectModel projectModel)
-        {
-            if (id != projectModel.ID)
-            {
-                return NotFound();
-            }
+        //// POST: ProjectModels/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("ID,ApplicationUserID,ProjBudget,ProjCurentCost")] ProjectModel projectModel)
+        //{
+        //    if (id != projectModel.ID)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(projectModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProjectModelExists(projectModel.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(AllProjectsPartial));
-            }
-            return View(projectModel);
-        }
-
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(projectModel);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!ProjectModelExists(projectModel.ID))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(AllProjectsPartial));
+        //    }
+        //    return View(projectModel);
+        //}
+        #region DELETE_PROJECT
         // GET: ProjectModels/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -436,15 +436,30 @@ namespace AXCEX_ONLINE.Controllers
 
         // POST: ProjectModels/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // First Delete All Entries Where Employees Were Assigned to Project
+            var emps = _context.ProjectAssignments.Where(a => a.ProjKey == id);
+            // If there are emps
+            if (emps != null)
+            {
+                // Remove Each One
+                foreach (ProjectAssignment p in emps)
+                {
+                    _context.Remove(p);
+                }
+                // Update the Db
+                await _context.SaveChangesAsync();
+            }
+            // Then Delete the project
             var projectModel = await _context.ProjectModel.SingleOrDefaultAsync(m => m.ID == id);
             _context.ProjectModel.Remove(projectModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(AllProjectsPartial));
         }
-
+        #endregion DELETE_PROJECT
         private bool ProjectModelExists(int id)
         {
             return _context.ProjectModel.Any(e => e.ID == id);

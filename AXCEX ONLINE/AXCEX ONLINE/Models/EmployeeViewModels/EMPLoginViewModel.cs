@@ -11,6 +11,7 @@ namespace AXCEX_ONLINE.Models.EmployeeViewModels
 
         [Required]
         [EmailAddress]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]

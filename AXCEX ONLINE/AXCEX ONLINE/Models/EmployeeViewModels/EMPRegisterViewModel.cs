@@ -35,5 +35,7 @@ namespace AXCEX_ONLINE.Models.EmployeeViewModels
         [Required]
         [Display(Name = "Assigned Employee Number")]
         public int Empid { get; set; }
+
+       
     }
 }

@@ -13135,9 +13135,9 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX ONLINE\\AXCEX ONLINE\\AXCEX ONLINE.csproj",
-      "projectName": "AXCEX ONLINE",
-      "projectPath": "C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX ONLINE\\AXCEX ONLINE\\AXCEX ONLINE.csproj",
+      "projectUniqueName": "C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX ONLINE\\AXCEX ONLINE\\AXCEXONLINE.csproj",
+      "projectName": "AXCEXONLINE",
+      "projectPath": "C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX ONLINE\\AXCEX ONLINE\\AXCEXONLINE.csproj",
       "packagesPath": "C:\\Users\\micha\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX ONLINE\\AXCEX ONLINE\\obj\\",
       "projectStyle": "PackageReference",

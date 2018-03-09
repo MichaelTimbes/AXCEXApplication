@@ -11,9 +11,11 @@ namespace AXCEX_ONLINE.Models.AdminViewModels
         
 
         [Required]
+        [Display(Name = "Admin UserName")]
         public string Admin_Uname { get; set; }
 
         [Required]
+        [Display(Name ="Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
