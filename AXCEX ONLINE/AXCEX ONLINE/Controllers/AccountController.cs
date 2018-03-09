@@ -250,7 +250,7 @@ namespace AXCEX_ONLINE.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        /*https://github.com/MichaelTimbes/AXCEXApplication/delete/master/AXCEX%20ONLINE/AXCEX%20ONLINE/obj/Release/netcoreapp2.0/PubTmp/Out/appsettings.production.json*/
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
