@@ -18,12 +18,14 @@ C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Admin\AdminHome.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Admin\AdminLogin.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Admin\RegisterAdmin.cshtml
+--file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Employee\Delete.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Employee\Details.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Employee\EditEmployee.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Employee\EmployeeHome.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Employee\EmployeeLogin.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Employee\Index.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Employee\RegisterEmployee.cshtml
+--file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Employee\RegisterEmployeeAdmin.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Employee\ViewAssignedProjects.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Home\About.cshtml
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Home\Contact.cshtml

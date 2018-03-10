@@ -12,9 +12,12 @@
                 @if (User.IsInRole("Employee"))
         {
         <li class="nav-item">
-            <a class="nav-link" asp-area="" asp-controller="Employee" asp-action="EmployeeHome" title="Employee Home Page"> Employee Home</a>
+            <a class="nav-link" asp-area="" asp-controller="Employee" asp-action="EmployeeHome" title="Employee Home Page">Home</a>
         </li>
-        <a class="nav-link" asp-area="" asp-controller="Employee" asp-action="EditEmployee" title="Edit Employee"> Employee Profile</a>
+
+        <li class="nav-item">
+        <a class="nav-link" asp-area="" asp-controller="Employee" asp-action="EditEmployee" title="Edit Employee">Profile</a>
+        </li>
 }
 else if (User.IsInRole("Administrator"))
 {
@@ -28,9 +31,9 @@ else if (User.IsInRole("Administrator"))
 else
 {
         <li class="nav-item">
-            <a class="nav-link" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage Customer">Customer Profile</a>
+            <a class="nav-link" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage Customer">Profile</a>
         </li>
-            }
+}
 
         <li><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout" title="Log Out">Log Out</a></li>
         </ul>

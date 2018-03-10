@@ -2,59 +2,52 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-<!--<p>
+<h1>Welcome to AXCEX Online Management Application</h1>
+<p class="text-white">
+    This is a web application to help keep track of projects with AXCEX Media. Please choose your login. If you're a customer, please choose login or register at the top right hand corner.
+</p>
+<p>
     <b>Employee Portal:</b>
 
-    <br />
+    <!--<br />
     <a asp-controller="Employee" asp-action="RegisterEmployee">Register Employee</a>
+    -->
     <br />
     <a asp-controller="Employee" asp-action="EmployeeLogin">Employee Login</a>
+
+    <br /><br />
+
+    <b>Owner Portal:</b>
+
     
-    <br/>
-
-    <b>Admin Portal:</b>
-
+    <!--<a asp-controller="Admin" asp-action="RegisterAdmin"> Register Admin</a>
+    -->
     <br />
-    <a asp-controller="Admin" asp-action="RegisterAdmin"> Register Admin</a>
-    <br />
-    <a asp-controller="Admin" asp-action="AdminLogin">Admin Login</a>
+    <a asp-controller="Admin" asp-action="AdminLogin">Owner Login</a>
 
-</p>-->
-<h1>Welcome Page</h1>
-    <p> 
-        This is a web application to help keep track of projects with AXCEX Media. Please choose your login.
-    </p>
+</p>
 
-    <div class="row" >
 
-        <form asp-controller="Account" asp-action="Login">
+<!--<div class="row" >
 
-            <button formmethod="get" class="btn-lg btn-light" type="submit">Customer</button>
+    <form asp-controller="Account" asp-action="Login">
 
-        </form>
-
-        <form asp-controller="Employee" asp-action="EmployeeLogin">
-
-            <button formmethod="get" class="btn-lg btn-light" type="submit">Employee</button>
-
-        </form>
-
-        <form asp-controller="Admin" asp-action="AdminLogin">
-
-            <button formmethod="get" class="btn-lg btn-light" type="submit">Admin</button>
-
-        </form>
-
-    </div>
-<h2> Register</h2>
-<div class="row">
-
-    <a asp-controller="Employee" asp-action="RegisterEmployee">Register Employee</a>
-
-    <form asp-controller="Admin" asp-action="RegisterAdmin">
-
-        <button formmethod="get" class="btn-lg btn-light" type="submit">Register Admin</button>
+        <button formmethod="get" class="btn-lg btn-light" type="submit">Customer</button>
 
     </form>
+
+    <form asp-controller="Employee" asp-action="EmployeeLogin">
+
+        <button formmethod="get" class="btn-lg btn-light" type="submit">Employee</button>
+
+    </form>
+
+    <form asp-controller="Admin" asp-action="AdminLogin">
+
+        <button formmethod="get" class="btn-lg btn-light" type="submit">Admin</button>
+
+    </form>
+
 </div>
+
+    -->

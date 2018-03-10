@@ -194,7 +194,88 @@ namespace AXCEX_ONLINE.Controllers
 
             return View(employeeModel);
         }
+        #region CREATE_EMP_ADMIN
+        [Authorize(Roles = "Administrator")]
+        [HttpGet]
+        public IActionResult RegisterEmployeeAdmin(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
 
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterEmployeeAdmin(EMPRegisterViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            _logger.LogDebug("Checking Model State");
+            if (ModelState.IsValid)
+            {
+                _logger.LogDebug("Model is Valid");
+                _logger.LogDebug("Creating Employee");
+
+                var checkid = _context.EmployeeModel.Where(e => (e.EMPID == model.Empid));
+                var checkemail = _context.EmployeeModel.Where(e => (e.Email == model.Email));
+
+                if (checkid.Count() > 0)
+                {
+                    ViewData["Error"] = "Employee ID Already Exists";
+                    return View(model);
+                }
+
+                if (checkemail.Count() > 0)
+                {
+                    ViewData["Error"] = "Employee Email Already Exists";
+                    return View(model);
+                }
+
+                var user = new EmployeeModel
+                {
+
+                    EMP_FNAME = model.FNAME,
+                    EMPID = model.Empid,
+                    EMP_LNAME = model.LNAME,
+                    UserName = model.FNAME,
+                    Email = model.Email
+                };
+
+                _logger.LogDebug("Creating User");
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+
+                    // Add to Role
+                    IdentityResult RoleRes = await _userManager.AddToRoleAsync(user, MODEL_ROLE);
+                    // Session Information
+                    HttpContext.Session.SetString(SessionUserName, user.UserName);
+                    HttpContext.Session.SetString(SessionUserId, user.Id);
+                    _logger.LogInformation("User created a new account with password.");
+
+                    // Email Confirmation
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                    _logger.LogInformation("User created a new account with password.");
+
+
+
+                    // If All Went Well- Go to Employee Home Page
+                    return RedirectToAction("Index");
+                }
+                _logger.LogDebug("Couldn't Create User");
+                // Else
+                return View(model);
+            }
+
+            // If we got this far, something failed, redisplay form
+            _logger.LogDebug("Model Invalid in Register Employee");
+            return RedirectToAction(controllerName: "Home", actionName: "Index");
+        }
+
+        #endregion CREATE_EMP_ADMIN
         [HttpGet]
         [AllowAnonymous]
         public IActionResult RegisterEmployee(string returnUrl = null)
@@ -450,7 +531,7 @@ namespace AXCEX_ONLINE.Controllers
         // GET: EmployeeModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EmployeeModel.ToListAsync());
+            return View(await _context.EmployeeModel.Where(e=> !e.EMPID.Equals(null)).OrderBy(e=>e.EMPID).ToListAsync());
         }
         #region HELPER_METHODS
         private bool EmployeeModelExists(string id)
