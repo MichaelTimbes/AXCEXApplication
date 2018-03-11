@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace AXCEX_ONLINE.Controllers
 {
-    //[Authorize(Roles = "EmployeeUser")]
+    
 
     public class EmployeeController : Controller
     {

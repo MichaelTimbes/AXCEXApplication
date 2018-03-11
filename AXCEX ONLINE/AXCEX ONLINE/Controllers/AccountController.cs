@@ -16,7 +16,7 @@ using AXCEX_ONLINE.Services;
 
 namespace AXCEX_ONLINE.Controllers
 {
-    [Authorize]
+    
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
@@ -40,7 +40,25 @@ namespace AXCEX_ONLINE.Controllers
 
         [TempData]
         public string ErrorMessage { get; set; }
+        #region CUSTOMER_HOME
+        [HttpGet]
+        public IActionResult CustomerHome(string returnURL = null)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                // Find User ID
+                var id = _userManager.GetUserId(User);
+                //var ViewResult = _cont
+                var ViewRes = _userManager.GetUserAsync(User).Result;
+                return View(ViewRes);
+            }
+            else
+            {
+                return RedirectToAction(controllerName: "Account", actionName: "Login");
+            }
+        }
 
+        #endregion CUSTOMER_HOME
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
@@ -66,7 +84,8 @@ namespace AXCEX_ONLINE.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction("CustomerHome");
                 }
                 if (result.RequiresTwoFactor)
                 {
