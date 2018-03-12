@@ -18,6 +18,11 @@
     <Compile Remove="Data\Migrations\20180226053624_EmployeeModel_004.Designer.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Properties\PublishProfiles\AXCEXONLINEWEBAPP001 - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\CustomProfile.pubxml" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
@@ -33,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 

@@ -22,12 +22,7 @@ namespace AXCEX_ONLINE.Models
         // ApplicationUser Navigation
         [Column(name: "CustomerName")]
         public string Customer { get; set; }
-
-        // Employee's Assigned to the Project
-        //public string IdendityUserID { get; set; }
-        //public ICollection<ApplicationUser> AssignedEmployees { get; set; }
-
-
+        
         // Project's Budget
         [Column(TypeName = "money")]
         public decimal ProjBudget { get; set; }

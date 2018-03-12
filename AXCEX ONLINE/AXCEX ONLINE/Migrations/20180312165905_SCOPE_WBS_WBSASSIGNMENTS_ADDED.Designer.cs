@@ -11,9 +11,10 @@ using System;
 namespace AXCEXONLINE.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    partial class ProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180312165905_SCOPE_WBS_WBSASSIGNMENTS_ADDED")]
+    partial class SCOPE_WBS_WBSASSIGNMENTS_ADDED
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

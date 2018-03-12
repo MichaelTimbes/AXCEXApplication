@@ -1,5 +1,5 @@
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE
---output-path=obj\Any CPU\Release\netcoreapp2.0\
+--output-path=obj\Release\netcoreapp2.0\
 --application-name=AXCEXONLINE
 --content-root=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE
 --file=C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\Views\Account\AccessDenied.cshtml

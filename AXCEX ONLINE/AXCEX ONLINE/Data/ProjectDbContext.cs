@@ -22,10 +22,17 @@ namespace AXCEX_ONLINE.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-
+        // Connection to Projects
         public DbSet<AXCEX_ONLINE.Models.ProjectModel> ProjectModel { get; set; }
-
-        //public DbSet<AXCEX_ONLINE.Models.EmployeeModel> EmployeeModel { get; set; }
+        // Connection to Project Assignmnets
         public DbSet<AXCEX_ONLINE.Models.ProjectAssignment> ProjectAssignments { get; set; }
+        // Scopes of work
+        public DbSet<Models.ScopeModel> Scopes { get; set; }
+        // WBS Models
+        public DbSet<Models.WBSModel> WorkBreakDowns { get; set; }
+        // Assignments of a WBS
+        public DbSet<AXCEX_ONLINE.Models.WBSAssignment> WBSAssignments { get; set; }
+       
+
     }
 }

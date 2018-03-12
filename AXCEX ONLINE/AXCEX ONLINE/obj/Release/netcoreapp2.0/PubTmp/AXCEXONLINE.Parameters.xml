@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="IIS Web Application Name" description="" value="AXCEXONLINEWEBAPP001" tags="IisApp">
+  <parameter name="IIS Web Application Name" description="" value="axcexnetcore" tags="IisApp">
     <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX\ ONLINE\\AXCEX\ ONLINE\\obj\\Release\\netcoreapp2\.0\\PubTmp\\Out\\$" />
-  </parameter>
-  <parameter name="AXCEX_ONLINE.Data.ApplicationDbContext" description="" value="Data Source=tcp:axcexonline20180307092432dbserver.database.windows.net,1433;Initial Catalog=AXCEXONLINE20180307092432_db;User Id=mtadmin@axcexonline20180307092432dbserver;Password=Alphabravo01*" tags="dbfullsql">
-    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX\ ONLINE\\AXCEX\ ONLINE\\obj\\Release\\netcoreapp2\.0\\PubTmp\\EFSQLScripts\\AXCEX_ONLINE\.Data\.ApplicationDbContext\.sql$" />
-  </parameter>
-  <parameter name="AXCEX_ONLINE.Data.ProjectDbContext" description="" value="Data Source=tcp:axcexonline20180307092432dbserver.database.windows.net,1433;Initial Catalog=AXCEXONLINE20180307092432_db;User Id=mtadmin@axcexonline20180307092432dbserver;Password=Alphabravo01*" tags="dbfullsql">
-    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\micha\\Documents\\GitHub\\AXCEXApplication\\AXCEX\ ONLINE\\AXCEX\ ONLINE\\obj\\Release\\netcoreapp2\.0\\PubTmp\\EFSQLScripts\\AXCEX_ONLINE\.Data\.ProjectDbContext\.sql$" />
   </parameter>
 </parameters>
