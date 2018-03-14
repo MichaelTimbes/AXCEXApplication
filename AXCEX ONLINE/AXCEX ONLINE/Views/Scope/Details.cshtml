@@ -1,0 +1,84 @@
+﻿@model AXCEX_ONLINE.Models.ScopeModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ScopeModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScopeVersion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScopeVersion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScopeAuthor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScopeAuthor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScopeManager)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScopeManager)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScopeExpectations)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScopeExpectations)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScopeLimitations)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScopeLimitations)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScopeSummary)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScopeSummary)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScopeGoals)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScopeGoals)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScopePhase)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScopePhase)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScopeStartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScopeStartDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScopeEndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScopeEndDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

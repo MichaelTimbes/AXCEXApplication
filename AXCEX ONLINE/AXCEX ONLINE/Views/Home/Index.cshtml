@@ -2,52 +2,66 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Welcome to AXCEX Online Management Application</h1>
+@*<h1>Welcome to AXCEX Online Management Application</h1>
 <p class="text-white">
     This is a web application to help keep track of projects with AXCEX Media. Please choose your login. If you're a customer, please choose login or register at the top right hand corner.
-</p>
-<p>
+</p>*@
+<!-- <p>
     <b>Employee Portal:</b>
 
     <!--<br />
     <a asp-controller="Employee" asp-action="RegisterEmployee">Register Employee</a>
-    -->
-    <br />
-    <a asp-controller="Employee" asp-action="EmployeeLogin">Employee Login</a>
-
-    <br /><br />
-
-    <b>Owner Portal:</b>
-
     
-    <!--<a asp-controller="Admin" asp-action="RegisterAdmin"> Register Admin</a>
-    -->
-    <br />
-    <a asp-controller="Admin" asp-action="AdminLogin">Owner Login</a>
+<br />
+<a asp-controller="Employee" asp-action="EmployeeLogin">Employee Login</a>
 
-</p>
+<br /><br />
+
+<b>Owner Portal:</b>
 
 
-<!--<div class="row" >
+<!--<a asp-controller="Admin" asp-action="RegisterAdmin"> Register Admin</a>
 
-    <form asp-controller="Account" asp-action="Login">
+<br />
+<a asp-controller="Admin" asp-action="AdminLogin">Owner Login</a>
 
-        <button formmethod="get" class="btn-lg btn-light" type="submit">Customer</button>
-
-    </form>
-
-    <form asp-controller="Employee" asp-action="EmployeeLogin">
-
-        <button formmethod="get" class="btn-lg btn-light" type="submit">Employee</button>
-
-    </form>
-
-    <form asp-controller="Admin" asp-action="AdminLogin">
-
-        <button formmethod="get" class="btn-lg btn-light" type="submit">Admin</button>
-
-    </form>
+</p> -->
+<div class="jumbotron">
+    <h1 class="display-3">AXCEX Online Management</h1>
+    <p class="lead">This is a web application that makes it easy for customers and employees of AXCEX to view and manage projects.</p>
+    <hr class="my-4">
+    <p> </p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="#" role="button">AXCEX Website</a>
+    </p>
+</div>
+<div class="justify-content-md-center row">
+    <!-- THIS IS THE CUSTOMER LOGIN PORTAL-->
+    <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header">Customers</div>
+        <div class="card-body">
+            <h4 class="card-title">Customer Links</h4>
+            <p class="card-text">If you are a customer, below are links you may find useful.</p>
+            <div class="row">
+                <ul>
+                    <li><a class="text-info" asp-controller="Account" asp-action="Login">Customer Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div> </div>
+    <!-- THIS IS THE Employee LOGIN PORTAL-->
+    <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+        <div class="card-header">Employees</div>
+        <div class="card-body">
+            <h4 class="card-title">Employee Links</h4>
+            <p class="card-text">If you are an employee, below are links you may find useful.</p>
+            <div class="row">
+                <ul>
+                    <li><a class="text-info" asp-controller="Employee" asp-action="EmployeeLogin">Employee Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 </div>
-
-    -->

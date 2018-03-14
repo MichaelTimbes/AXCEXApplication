@@ -1,0 +1,95 @@
+﻿@model IEnumerable<AXCEX_ONLINE.Models.ScopeModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScopeVersion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScopeAuthor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScopeManager)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScopeExpectations)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScopeLimitations)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScopeSummary)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScopeGoals)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScopePhase)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScopeStartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScopeEndDate)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopeVersion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopeAuthor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopeManager)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopeExpectations)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopeLimitations)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopeSummary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopeGoals)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopePhase)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopeStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopeEndDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

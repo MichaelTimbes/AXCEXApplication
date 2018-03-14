@@ -42,6 +42,9 @@
             </div>
         </div>
     </div>
+    <div>
+        @await Component.InvokeAsync("ProjectVC", new { id = @Model.EMPID })
+    </div>
 </div>
 
 

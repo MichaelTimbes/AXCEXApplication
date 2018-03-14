@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AXCEX_ONLINE.Models.ComponentViewModels.CompViewAssignedProj>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Your Assigned Active Projects</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Project_Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Assigned_By)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActiveProj)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assigned_By)
+            </td>
+
+            <th>
+                @Html.DisplayFor(modelItem => item.ActiveProj)
+            </th>
+            <td>
+                <div class="row">
+                    <form>
+                        <button formmethod="get" class="btn-sm btn-info" type="submit">Tasks</button>
+                    </form>
+
+                    <form asp-action="Index">
+                        <button formmethod="get" class="btn-sm btn-warning" type="submit"> Scope</button>
+                    </form>
+                    <!--
+            <a asp-action="EditEmployee">Scope</a>
+            <a asp-action="Details">Tasks</a>
+            <a asp-action="Delete">Issues</a>-->
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

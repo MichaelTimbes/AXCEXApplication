@@ -1,0 +1,60 @@
+﻿@model AXCEX_ONLINE.Models.WBSModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>WBSModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProjectId" class="control-label"></label>
+                <input asp-for="ProjectId" class="form-control" />
+                <span asp-validation-for="ProjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AssignedBy" class="control-label"></label>
+                <input asp-for="AssignedBy" class="form-control" />
+                <span asp-validation-for="AssignedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WBSSummary" class="control-label"></label>
+                <input asp-for="WBSSummary" class="form-control" />
+                <span asp-validation-for="WBSSummary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WBSHours" class="control-label"></label>
+                <input asp-for="WBSHours" class="form-control" />
+                <span asp-validation-for="WBSHours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WBSCost" class="control-label"></label>
+                <input asp-for="WBSCost" class="form-control" />
+                <span asp-validation-for="WBSCost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

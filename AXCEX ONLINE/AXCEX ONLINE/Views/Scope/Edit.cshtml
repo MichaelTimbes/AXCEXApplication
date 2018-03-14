@@ -1,0 +1,81 @@
+﻿@model AXCEX_ONLINE.Models.ScopeModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>ScopeModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="ProjectId" class="control-label"></label>
+                <input asp-for="ProjectId" class="form-control" />
+                <span asp-validation-for="ProjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopeVersion" class="control-label"></label>
+                <input asp-for="ScopeVersion" class="form-control" />
+                <span asp-validation-for="ScopeVersion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopeAuthor" class="control-label"></label>
+                <input asp-for="ScopeAuthor" class="form-control" />
+                <span asp-validation-for="ScopeAuthor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopeManager" class="control-label"></label>
+                <input asp-for="ScopeManager" class="form-control" />
+                <span asp-validation-for="ScopeManager" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopeExpectations" class="control-label"></label>
+                <input asp-for="ScopeExpectations" class="form-control" />
+                <span asp-validation-for="ScopeExpectations" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopeLimitations" class="control-label"></label>
+                <input asp-for="ScopeLimitations" class="form-control" />
+                <span asp-validation-for="ScopeLimitations" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopeSummary" class="control-label"></label>
+                <input asp-for="ScopeSummary" class="form-control" />
+                <span asp-validation-for="ScopeSummary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopeGoals" class="control-label"></label>
+                <input asp-for="ScopeGoals" class="form-control" />
+                <span asp-validation-for="ScopeGoals" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopePhase" class="control-label"></label>
+                <input asp-for="ScopePhase" class="form-control" />
+                <span asp-validation-for="ScopePhase" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopeStartDate" class="control-label"></label>
+                <input asp-for="ScopeStartDate" class="form-control" />
+                <span asp-validation-for="ScopeStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopeEndDate" class="control-label"></label>
+                <input asp-for="ScopeEndDate" class="form-control" />
+                <span asp-validation-for="ScopeEndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

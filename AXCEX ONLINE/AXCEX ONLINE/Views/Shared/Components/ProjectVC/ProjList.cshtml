@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AXCEX_ONLINE.Models.ComponentViewModels.ProjectCompView>
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 30rem;">
+    <div class="card-header">List of Active Projects:</div>
+    <div class="card-body">
+        <h5 class="card-title">Active Projects</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProjectName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.ActiveProj)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActiveProj)
+                        </td>
+
+                        <td>
+                            <a asp-controller="Project" asp-action="ProjectDetails" asp-route-id="@item.ProjectId">Details</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
