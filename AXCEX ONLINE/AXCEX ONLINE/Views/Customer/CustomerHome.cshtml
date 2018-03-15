@@ -1,4 +1,4 @@
-﻿@model AXCEX_ONLINE.Models.ApplicationUser
+﻿@model AXCEX_ONLINE.Models.CustomerViewModels.CustomerHomeVM
 
 @{
     ViewData["Title"] = "EmployeeHome";
@@ -10,7 +10,7 @@
     <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 20rem;">
         <div class="card-header">Employee Account Navigation:</div>
         <div class="card-body">
-            <h5 class="card-title">Hello, @Model.UserName.</h5>
+            <h5 class="card-title">Hello, @Model.CustomerName.</h5>
             <p class="card-text">
                 Below are links to edit your account information and manage other account
                 related information.
@@ -37,10 +37,18 @@
     </div>
 
 </div>
-
+@if (Model.NumProjects > 0)
+{
 <div class="row">
     @await Component.InvokeAsync("CustomerProjectVC", new { customer_email = @Model.Email })
 </div>
+}
+else
+{
+<div>
+    No Projects are Active.
+</div>
+}
 
 
 

@@ -20,6 +20,10 @@ namespace AXCEX_ONLINE.Models
         [Column(name: "CUSTOMER_NAME")]
         public string CUSTOMER_NAME { get; set; }
 
+        // First and Last Name
+        [Column(name: "CUSTOMER_EMAIL")]
+        public string CUSTOMER_EMAIL { get; set; }
+
         // This is to be set by the admin
         [Column(name: "CUSTOMER_ACCOUNT_NUM")]
         public string CUSTOMER_ACCOUNT { get; set; }

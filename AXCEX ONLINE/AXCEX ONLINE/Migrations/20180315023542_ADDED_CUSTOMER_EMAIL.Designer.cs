@@ -11,9 +11,10 @@ using System;
 namespace AXCEXONLINE.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    partial class ProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180315023542_ADDED_CUSTOMER_EMAIL")]
+    partial class ADDED_CUSTOMER_EMAIL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -38,7 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\CustomerViewModels\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 

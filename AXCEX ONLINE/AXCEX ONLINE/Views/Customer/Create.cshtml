@@ -1,4 +1,4 @@
-﻿@model AXCEX_ONLINE.Models.CustomerModel
+﻿@model AXCEX_ONLINE.Models.CustomerViewModels.AdminCustomerRegisterVM
 
 @{
     ViewData["Title"] = "Create";
@@ -11,17 +11,36 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="CustomerName" class="control-label"></label>
+                <input asp-for="CustomerName" class="form-control" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerAccount" class="control-label"></label>
+                <input asp-for="CustomerAccount" class="form-control" />
+                <span asp-validation-for="CustomerAccount" class="text-danger"></span>
+            </div>
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CUSTOMER_NAME" class="control-label"></label>
-                <input asp-for="CUSTOMER_NAME" class="form-control" />
-                <span asp-validation-for="CUSTOMER_NAME" class="text-danger"></span>
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="CUSTOMER_ACCOUNT" class="control-label"></label>
-                <input asp-for="CUSTOMER_ACCOUNT" class="form-control" />
-                <span asp-validation-for="CUSTOMER_ACCOUNT" class="text-danger"></span>
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

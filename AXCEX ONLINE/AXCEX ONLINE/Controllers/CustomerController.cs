@@ -9,15 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
-using AXCEX_ONLINE.Models.AccountViewModels;
+using AXCEX_ONLINE.Models.CustomerViewModels;
 using System;
+using AXCEX_ONLINE.Models.AccountViewModels;
 
 namespace AXCEXONLINE.Controllers
 {
     public class CustomerController : Controller
     {
         private readonly ProjectDbContext _context;
-        //private readonly ProjectDbContext _projectcontext;
+        private readonly ApplicationDbContext _appcontext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -26,12 +27,15 @@ namespace AXCEXONLINE.Controllers
 
         public CustomerController(
             ProjectDbContext context,
+            ApplicationDbContext appcontext,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AXCEX_ONLINE.Controllers.AccountController> logger)
         {
             _context = context;
+            _appcontext = appcontext;
+
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
@@ -47,9 +51,16 @@ namespace AXCEXONLINE.Controllers
             {
                 // Find User ID
                 var id = _userManager.GetUserId(User);
-                //var ViewResult = _cont
+                var Customer_Email = _appcontext.Users.Where(u => u.Id == id).First().Email;
+                var Customer_Name = _appcontext.Users.Where(u => u.Id == id).First().UserName;
+                var ViewReturn = new CustomerHomeVM
+                {
+                    CustomerName = Customer_Name,
+                    Email= Customer_Email,
+                    NumProjects = _context.ProjectModel.Where(p=> p.Customer == Customer_Name).Count()
+                };
                 var ViewRes = _userManager.GetUserAsync(User).Result;
-                return View(ViewRes);
+                return View(ViewReturn);
             }
             else
             {
@@ -234,27 +245,54 @@ namespace AXCEXONLINE.Controllers
         }
 
         // GET: CustomerModels/Create
+        [HttpGet]
         [Authorize(Roles = "Administrator")]
-        public IActionResult Create()
+
+        public IActionResult Create(string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
-        // POST: CustomerModels/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Create([Bind("ID,CUSTOMER_NAME,CUSTOMER_ACCOUNT")] CustomerModel customerModel)
+        [Authorize(Roles ="Administrator")]
+
+        public async Task<IActionResult> Create(AdminCustomerRegisterVM model, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
+
             if (ModelState.IsValid)
             {
-                _context.Add(customerModel);
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var customer_entry = new CustomerModel { CUSTOMER_NAME = model.CustomerName, CUSTOMER_EMAIL = model.Email, CUSTOMER_ACCOUNT = model.CustomerAccount };
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                _context.Customers.Add(customer_entry);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User created a new account with password.");
+
+                    // Email Verification
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    // Assign Role
+                    _logger.LogInformation("User Customer Role Assigned.");
+                    IdentityResult RoleRes = await _userManager.AddToRoleAsync(user, MODEL_ROLE);
+
+                    return RedirectToAction("Index");
+                }
+                
             }
-            return View(customerModel);
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
         // GET: CustomerModels/Edit/5
