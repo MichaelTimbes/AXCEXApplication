@@ -109,7 +109,13 @@ namespace AXCEX_ONLINE.Controllers
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true!!!!
                 //var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 var activeUser = await _context.EmployeeModel.FirstOrDefaultAsync(m => m.Email == model.Email );
+                if (activeUser == null)
+                {
+                    ViewData["ErrorMsg"] = "Email is incorrect or user doesn't exist!";
+                    return View(model);
+                }
                 var result = await _signInManager.CheckPasswordSignInAsync(activeUser,model.Password,false);
+
                 if (result.Succeeded)
                 {
                    await _signInManager.PasswordSignInAsync(activeUser,model.Password,false,false);

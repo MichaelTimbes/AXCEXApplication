@@ -22,7 +22,7 @@ namespace AXCEX_ONLINE.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        const string MODEL_ROLE = "Customer";
+        const string MODEL_ROLE = "GENERIC_USER";
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
@@ -40,25 +40,25 @@ namespace AXCEX_ONLINE.Controllers
 
         [TempData]
         public string ErrorMessage { get; set; }
-        #region CUSTOMER_HOME
-        [HttpGet]
-        public IActionResult CustomerHome(string returnURL = null)
-        {
-            if (_signInManager.IsSignedIn(User))
-            {
-                // Find User ID
-                var id = _userManager.GetUserId(User);
-                //var ViewResult = _cont
-                var ViewRes = _userManager.GetUserAsync(User).Result;
-                return View(ViewRes);
-            }
-            else
-            {
-                return RedirectToAction(controllerName: "Account", actionName: "Login");
-            }
-        }
+        //#region CUSTOMER_HOME
+        //[HttpGet]
+        //public IActionResult CustomerHome(string returnURL = null)
+        //{
+        //    if (_signInManager.IsSignedIn(User))
+        //    {
+        //        // Find User ID
+        //        var id = _userManager.GetUserId(User);
+        //        //var ViewResult = _cont
+        //        var ViewRes = _userManager.GetUserAsync(User).Result;
+        //        return View(ViewRes);
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction(controllerName: "Account", actionName: "Login");
+        //    }
+        //}
 
-        #endregion CUSTOMER_HOME
+        //#endregion CUSTOMER_HOME
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)

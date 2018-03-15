@@ -1,13 +1,10 @@
 ﻿@model AXCEX_ONLINE.Models.ApplicationUser
-    <!--1744-->
+
 @{
     ViewData["Title"] = "EmployeeHome";
 }
 
-<h2>Home Page for @Model.UserName</h2>
-
-
-<!--<a role="button" asp-controller="Employee" asp-action="EditEmployee">Edit Account</a>-->
+<h2>Customer Dashboard</h2>
 
 <div class="row">
     <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 20rem;">
@@ -22,7 +19,7 @@
                 <form asp-controller="Manage" asp-action="Index">
                     <button class="btn-primary" type="submit" formmethod="get">Edit Account</button>
                 </form>
-                
+
             </div>
         </div>
     </div>
@@ -34,15 +31,16 @@
             <p class="card-text">
                 Here you'll find tools to track project progress and view work assigned.
             </p>
-            @*<div class="row">
-                
-                <form asp-action="ViewAssignedProjects">
-                    <input type="hidden" asp-for="EMPID" />
-                    <button class="btn-info" type="submit" formmethod="get">Assigned Projects</button>
-                </form>
-            </div>*@
+
         </div>
+
     </div>
+
 </div>
+
+<div class="row">
+    @await Component.InvokeAsync("CustomerProjectVC", new { customer_email = @Model.Email })
+</div>
+
 
 

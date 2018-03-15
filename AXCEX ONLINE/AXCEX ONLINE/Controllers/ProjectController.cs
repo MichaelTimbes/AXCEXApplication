@@ -59,7 +59,7 @@ namespace AXCEX_ONLINE.Controllers
                 id = HttpContext.Session.GetInt32(ProjectID);
             }
             // Find All Employees Assigned to the Project id 
-            var assigned_to = _context.ProjectAssignments.Where(p => p.ProjKey == id).ToList();
+            var assigned_to = _context.ProjectAssignments.Where(p => p.ProjKey == id).ToList().OrderBy(p=>p.EmpKey);
                 // Begin the return view 
                 var emp_list = new List<ProjectEmpsViewModel>();
 
@@ -141,7 +141,7 @@ namespace AXCEX_ONLINE.Controllers
             // Prep Return View
             var ReturnView = new List<ProjectAssignEmpViewModel>();
             // Select all employees
-            var emps = _appcontext.EmployeeModel.ToList();
+            var emps = _appcontext.EmployeeModel.ToList().OrderBy(e=>e.EMPID);
 
             foreach (EmployeeModel temp in emps)
             {
@@ -313,14 +313,16 @@ namespace AXCEX_ONLINE.Controllers
             _logger.LogInformation("Creating Project");
             // 
             ViewData["ReturnUrl"] = returnUrl;
+            // Check if Customer Exists
+            var ResultCheck = _appcontext.Users.Where(c=> c.Email == model.CustEmail).Count();
             // Check that model is good to go
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && ResultCheck > 0)
             {
                 // Create New Project
                 var project = new ProjectModel
                 {
                     ProjectName = model.ProjectName,
-                    Customer = model.Custid,
+                    Customer = model.CustEmail,
                     ProjBudget = model.ProjBudget,
                     ProjCurentCost = model.ProjCost,
                     IsActive = model.ActiveProj,
@@ -329,16 +331,25 @@ namespace AXCEX_ONLINE.Controllers
                 };
 
                 // Try to add to the database
-               
-                    _context.Add(project);
-                    await _context.SaveChangesAsync();
-                
+
+                _context.Add(project);
+                await _context.SaveChangesAsync();
+
                 // Redirect to the details if success.
                 return RedirectToAction(actionName: "ProjectDetails", routeValues: new { id = project.ID });
 
             }
+            else if(ResultCheck == 0)
+            {
+
+                _logger.LogCritical("Something went wrong in creating a new project.");
+                ViewData["ErrorMsg"] = "Customer Email Doesn't Exist";
+                return View(model);
+            }
+
             _logger.LogCritical("Something went wrong in creating a new project.");
-            return View();
+            ViewData["ErrorMsg"] = "Server Side Error- Model State Invalid. Contact website manager.";
+            return View(model);
         }
         #endregion CREATE_PROJECT
 

@@ -13,8 +13,9 @@ namespace AXCEX_ONLINE.Models.ProjectViewModels
         public string ProjectName { get; set; }
 
         [Required]
-        [Display(Name = "Customer Name")]
-        public string Custid { get; set; }
+        [Display(Name = "Customer Email")]
+        [DataType(DataType.EmailAddress)]
+        public string CustEmail{ get; set; }
 
         [Required]
         [Display(Name = "Project Budget")]
@@ -39,5 +40,7 @@ namespace AXCEX_ONLINE.Models.ProjectViewModels
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         public DateTime ProjEnd { get; set; }
+
+        
     }
 }
