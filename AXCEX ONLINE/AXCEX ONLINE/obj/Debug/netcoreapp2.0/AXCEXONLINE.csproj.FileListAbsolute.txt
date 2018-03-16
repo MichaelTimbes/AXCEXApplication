@@ -9,3 +9,4 @@ C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\D
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEXONLINE.AssemblyInfo.cs
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEXONLINE.dll
 C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEXONLINE.pdb
+C:\Users\micha\Documents\GitHub\AXCEXApplication\AXCEX ONLINE\AXCEX ONLINE\obj\Debug\netcoreapp2.0\AXCEXONLINE.csprojResolveAssemblyReference.cache

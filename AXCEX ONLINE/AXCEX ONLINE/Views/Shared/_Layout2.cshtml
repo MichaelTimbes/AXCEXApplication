@@ -9,22 +9,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AXCEX_ONLINE</title>
-
+    
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/customcss/new_theme.css" />
-        <link rel="stylesheet" href="~/css/customcss/new_theme.min.css" />
+        <link rel="stylesheet" href="~/custom_css/lib/bootstrap/dist/css/bootstrap-theme.css" />
+        <link rel="stylesheet" href="~/custom_css/lib/bootstrap/dist/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="~/custom_css/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/custom_css/lib/bootstrap/dist/css/bootstrap-theme.min.css" />
     </environment>
+
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/custom/new_theme.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/customcss/new_theme.min.css" asp-append-version="true" />
+        <link href="~/css/customcss/glphs.css" rel="stylesheet">
     </environment>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">AXCEX ONLINE</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" style="">
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- THIS IS THE VIEW FOR CUSTOMERS -->
@@ -42,33 +46,33 @@
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                 </li>
             </ul>
-            </div>
-            }
-            else
-            {
-            <div class="collapse navbar-collapse" id="navbarColor02">
-                <ul class="navbar-nav mr-auto">
-                    <!-- THIS IS THE STANDARD VIEW -->
-                    <li class="nav-item active">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home Page</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-                    </li>
-                </ul>
-                </div>
-                }
+        </div>
+}
+else
+{
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+            <!-- THIS IS THE STANDARD VIEW -->
+            <li class="nav-item active">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home Page</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+            </li>
+        </ul>
+    </div>
+}
 
-                @await Html.PartialAsync("_LoginPartial")
+        @await Html.PartialAsync("_LoginPartial")
     </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - AXCEX_ONLINE</p>
+            <p>&copy; 2018 - AXCEXONLINE</p>
         </footer>
     </div>
 

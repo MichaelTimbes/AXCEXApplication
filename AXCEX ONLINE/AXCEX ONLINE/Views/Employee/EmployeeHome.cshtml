@@ -9,7 +9,7 @@
 
 <!--<a role="button" asp-controller="Employee" asp-action="EditEmployee">Edit Account</a>-->
 <div class="row">
-    <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 20rem;">
+    <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 50rem;">
         <div class="card-header">Employee Account Navigation:</div>
         <div class="card-body">
             <h5 class="card-title">Hello, @Model.EMP_FNAME.</h5>
@@ -21,12 +21,12 @@
                 <form asp-action="EditEmployee">
                     <button class="btn-primary" type="submit" formmethod="get">Edit Account</button>
                 </form>
-                
+
             </div>
         </div>
     </div>
 
-    <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 20rem;">
+    <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 50rem;">
         <div class="card-header">Employee Projects Navigation:</div>
         <div class="card-body">
             <h5 class="card-title">Projects Assigned:</h5>
@@ -34,7 +34,7 @@
                 Here you'll find tools to track project progress and view work assigned.
             </p>
             <div class="row">
-                
+
                 <form asp-action="ViewAssignedProjects">
                     <input type="hidden" asp-for="EMPID" />
                     <button class="btn-info" type="submit" formmethod="get">Assigned Projects</button>
@@ -42,9 +42,9 @@
             </div>
         </div>
     </div>
-    <div>
-        @await Component.InvokeAsync("ProjectVC", new { id = @Model.EMPID })
-    </div>
+</div>
+<div class="justify-content-md-center">
+    @await Component.InvokeAsync("ProjectVC", new { id = @Model.EMPID })
 </div>
 
 

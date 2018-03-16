@@ -7,7 +7,8 @@
 <h2>Customer Dashboard</h2>
 
 <div class="row">
-    <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 20rem;">
+
+    <div class="card border-info mb-3" style="max-width: 50rem;">
         <div class="card-header">Employee Account Navigation:</div>
         <div class="card-body">
             <h5 class="card-title">Hello, @Model.CustomerName.</h5>
@@ -23,31 +24,33 @@
             </div>
         </div>
     </div>
-
-    <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 20rem;">
+</div>
+<div class="row">
+    <div class="card text-white bg-dark mb-3" style="max-width: 50rem;">
         <div class="card-header">Projects Navigation:</div>
         <div class="card-body">
             <h5 class="card-title">Projects:</h5>
             <p class="card-text">
-                Here you'll find tools to track project progress and view work assigned.
+                Here you'll find the links to view an on going project and see the details on things like cost and project tasks being completed when.
             </p>
 
         </div>
 
     </div>
-
 </div>
 @if (Model.NumProjects > 0)
 {
-<div class="row">
-    @await Component.InvokeAsync("CustomerProjectVC", new { customer_email = @Model.Email })
-</div>
+    <div class="row justify-content-md-center">
+        @await Component.InvokeAsync("CustomerProjectVC", new { customer_email = @Model.Email })
+    </div>
 }
 else
 {
-<div>
-    No Projects are Active.
-</div>
+    <p>
+        <span class="glyphicon glyphicon-bell"> No Active Projects</span>
+    </p>
+
+        
 }
 
 
