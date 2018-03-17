@@ -8,13 +8,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Project_ID)
+                Project ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employee_Name)
+                Employee Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employee_ID)
+                Employee ID
             </th>
             <th></th>
         </tr>
@@ -41,7 +41,7 @@
                 
                 <form asp-controller="Project" asp-action="AssignEmployeeto"  method="post" role="form">
                     <div>
-                        <button type="submit" class="btn-sm btn-success" name="empid" value="@item.Employee_ID">Add</button>
+                        <button type="submit" class="btn-sm btn-success" name="empid" value="@item.Employee_ID"><span class="glyphicon glyphicon-plus"></span> Add</button>
                     </div>
                 </form>
             </td>

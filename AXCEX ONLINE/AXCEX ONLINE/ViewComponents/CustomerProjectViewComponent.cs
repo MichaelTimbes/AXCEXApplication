@@ -55,15 +55,16 @@ namespace AXCEXONLINE.Controllers
 
                 foreach(ProjectModel p in projects)
                 {
+                    // Find Scope for the Project in Question
+                    var ProjectScope = _context.Scopes.Where(S => S.ProjectId == p.ID).First();
                     var entry = new CustomerProjectCompVM
                     {
                         Project_Name = p.ProjectName,
-                        // CHANGE THIS WHEN IMPLEMENTATION IS DONE
+                        // CHANGE THIS PERCENTAGE WHEN IMPLEMENTATION IS DONE
                         ProgressPercentage = 50,
                         ActiveProj = p.IsActive,
                         ProjectId = p.ID,
-                        // CHANGE THIS WHEN SCOPE IMPLEMENTATION IS DONE
-                        ScopeId = 0
+                        ScopeId = ProjectScope.ID
                     };
                     ViewList.Add(entry);
                 }

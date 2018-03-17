@@ -4,8 +4,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AXCEX_ONLINE.Models.ProjectViewModels
 {
-    public class ProjectEmplyViewClass
+    public class ProjectDetailsViewClass
     {
+        private int ProjectID;
+
+        public int GetProjectID()
+        {
+            return ProjectID;
+        }
+        public void SetProjectID(int _projectID)
+        {
+             ProjectID = _projectID;
+        }
+
+
         [Display(Name = "Project Name")]
         public string ProjectName { get; set; }
 
@@ -33,6 +45,12 @@ namespace AXCEX_ONLINE.Models.ProjectViewModels
         public DateTime ProjEnd { get; set; }
 
         [Display(Name = "Employees Assigned")]
-        public List<EmployeeModel> Employees { get; set; }
+        public List<EmployeeModel> Employees = new List<EmployeeModel>();
+
+        [Display(Name = "Current Scope")]
+        public ScopeModel CurrentScope { get; set; }
+
+
+
     }
 }

@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<AXCEX_ONLINE.Models.ProjectModel>
 
 <p>
-    @if(User.IsInRole("Administrator"))
+    @if (User.IsInRole("Administrator"))
     {
         <a role="button" class="btn btn-info" asp-action="CreateProject">Create New</a>
+       
     }
 </p>
 <table class="table">
@@ -60,15 +61,15 @@
                 </td>
                 <td>
                     <div class="btn-group-vertical">
-                        <a role="button" class="btn btn-primary" asp-action="EditProject" asp-route-id="@item.ID">Edit</a>
-                        <a role="button" class="btn btn-info" asp-action="ProjectDetails" asp-route-id="@item.ID">Details</a>
-                        <a role="button" class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        <a role="button" class="btn btn-primary" title="Edit" asp-action="EditProject" asp-route-id="@item.ID"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                        <a role="button" class="btn btn-info" title="Details" asp-action="ProjectDetails" asp-route-id="@item.ID"><span class="glyphicon glyphicon-list"></span> Details</a>
+                        <a role="button" class="btn btn-outline-danger" title="Delete" asp-action="Delete" asp-route-id="@item.ID"><span class="glyphicon glyphicon-remove"></span> Delete</a>
                     </div>
                 </td>
                 <td>
                     <div class="btn-group-vertical">
                         <a role="button" class="btn btn-primary" asp-controller="Project" asp-action="AssignEmployee" asp-route-id="@item.ID">Assign Employees</a>
-                        <a role="button" class="btn btn-secondary" asp-controller="Project" asp-action="AssignedEmployees" asp-route-id="@item.ID">View Assigned</a>
+                        <a role="button" class="btn btn-outline-info" asp-controller="Project" asp-action="AssignedEmployees" asp-route-id="@item.ID">View Assigned</a>
                     </div>
                 </td>
             </tr>

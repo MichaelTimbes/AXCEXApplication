@@ -216,8 +216,66 @@ namespace AXCEX_ONLINE.Controllers
             {
                 return NotFound();
             }
+            // Find all the assignments
+            var ProjectsAssignment = _context.ProjectAssignments.Where(P => P.ProjKey == id);
 
-            return View(projectModel);
+            var ViewModel = new ProjectDetailsViewClass
+            {
+                ActiveProj = projectModel.IsActive,
+                Custid = projectModel.Customer,
+                ProjBudget = projectModel.ProjBudget,
+                ProjCost = projectModel.ProjCurentCost,
+                ProjectName = projectModel.ProjectName,
+                ProjEnd = projectModel.EndDate,
+                ProjStart = projectModel.StartDate,
+
+
+
+            };
+            ViewModel.SetProjectID(projectModel.ID);
+
+            // Grab Scope and Have Most Reccent be the Most Updated One
+            var ScopeProj = _context.Scopes.Where(S=> S.ProjectId == projectModel.ID).OrderBy(S=> S.ScopeVersion);
+
+            // If The Scope Does Exist, Add it
+            if (ScopeProj.SingleOrDefault() == null)
+            {
+                // Add a Temp Scope
+                var TempScope = new ScopeModel
+                {
+                    ProjectId = projectModel.ID,
+                    ScopeVersion = 1,
+                    ScopeAuthor = "AUTHOR",
+                    ScopeGoals = "",
+                    ScopeExpectations = "",
+                    ScopeLimitations = "",
+                    ScopeManager = "",
+                    ScopePhase = "1",
+                    ScopeSummary = "",
+                    ScopeEndDate = DateTime.Today,
+                    ScopeStartDate = DateTime.Today
+                };
+                _context.Scopes.Add(TempScope);
+                await _context.SaveChangesAsync();
+
+                ViewModel.CurrentScope = TempScope;
+            }
+            else
+            {
+                ViewModel.CurrentScope = ScopeProj.First();
+            }
+
+            foreach (ProjectAssignment P in ProjectsAssignment)
+            {
+                var Employee =  _appcontext.EmployeeModel.Where(U => U.EMPID == P.EmpKey);
+
+                if(Employee != null)
+                {
+                    ViewModel.Employees.Add(Employee.First());
+                }
+                
+            }
+            return View(ViewModel);
         }
         #region EDIT_PROJECT
         //GET
@@ -333,6 +391,27 @@ namespace AXCEX_ONLINE.Controllers
                 // Try to add to the database
 
                 _context.Add(project);
+
+                await _context.SaveChangesAsync();
+
+                // Start a Scope for this Project
+                var ProjectContext = _context.ProjectModel.Where(P => P.ProjectName == project.ProjectName && P.ProjBudget == project.ProjBudget).First();
+
+                var DefaultScope = new ScopeModel
+                {
+                    ProjectId = ProjectContext.ID,
+                    ScopeVersion = 1,
+                    ScopeAuthor = "AUTHOR",
+                    ScopeGoals = "",
+                    ScopeExpectations = "",
+                    ScopeLimitations = "",
+                    ScopeManager = "",
+                    ScopePhase = "1",
+                    ScopeSummary = "",
+                    ScopeEndDate = DateTime.Today,
+                    ScopeStartDate = DateTime.Today
+                };
+                _context.Scopes.Add(DefaultScope);
                 await _context.SaveChangesAsync();
 
                 // Redirect to the details if success.
@@ -453,6 +532,8 @@ namespace AXCEX_ONLINE.Controllers
         {
             // First Delete All Entries Where Employees Were Assigned to Project
             var emps = _context.ProjectAssignments.Where(a => a.ProjKey == id);
+            // And Delete All the Scopes
+            var scopes = _context.Scopes.Where(P => P.ProjectId == id);
             // If there are emps
             if (emps != null)
             {
@@ -464,6 +545,16 @@ namespace AXCEX_ONLINE.Controllers
                 // Update the Db
                 await _context.SaveChangesAsync();
             }
+
+            // There is at least one Scope associated with a Project
+            foreach (ScopeModel s in scopes)
+            {
+                _context.Remove(s);
+            }
+
+            await _context.SaveChangesAsync();
+            
+            
             // Then Delete the project
             var projectModel = await _context.ProjectModel.SingleOrDefaultAsync(m => m.ID == id);
             _context.ProjectModel.Remove(projectModel);
