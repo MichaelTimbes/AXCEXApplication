@@ -17,71 +17,6 @@
         <h4>Scope Details</h4>
         <hr />
 
-        @*<dl class="dl-horizontal">
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.ScopeVersion)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ScopeVersion)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ScopeAuthor)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ScopeAuthor)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ScopeManager)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ScopeManager)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ScopeExpectations)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ScopeExpectations)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ScopeLimitations)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ScopeLimitations)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ScopeSummary)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ScopeSummary)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ScopeGoals)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ScopeGoals)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ScopePhase)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ScopePhase)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ScopeStartDate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ScopeStartDate)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ScopeEndDate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ScopeEndDate)
-                </dd>
-            </dl>
-        </div>*@
-
         <!-- ROW 1 -->
         <div class="row">
             <!-- BASIC INFORMATION-->
@@ -90,8 +25,8 @@
                 <div class="card-body">
                     @*<h4 class="card-title">Secondary card title</h4>*@
                     <p class="card-text text-dark">@Html.DisplayNameFor(model => model.ScopeVersion): @Html.DisplayFor(model => model.ScopeVersion)</p>
-                    <p class="card-text text-info">@Html.DisplayNameFor(model => model.ScopeAuthor): @Html.DisplayFor(model => model.ScopeAuthor)</p>
-                    <p class="card-text text-info">@Html.DisplayNameFor(model => model.ScopeManager): @Html.DisplayFor(model => model.ScopeManager)</p>
+                    <p class="card-text text-dark">@Html.DisplayNameFor(model => model.ScopeAuthor): @Html.DisplayFor(model => model.ScopeAuthor)</p>
+                    <p class="card-text text-dark">@Html.DisplayNameFor(model => model.ScopeManager): @Html.DisplayFor(model => model.ScopeManager)</p>
                 </div>
             </div>
 
@@ -116,7 +51,7 @@
             <div class="card bg-light mb-3 col-md-4 " style="max-width: 30rem;">
                 <div class="card-header">@Html.DisplayNameFor(model => model.ScopePhase)</div>
                 <div class="card-body">
-                    <p class="card-text text-info">@Html.DisplayFor(model => model.ScopePhase)</p>
+                    <p class="card-text text-dark">@Html.DisplayFor(model => model.ScopePhase)</p>
                 </div>
             </div>
             <!---->
@@ -128,7 +63,7 @@
             <div class="card bg-light mb-3 col-md-4 " style="max-width: 30rem;">
                 <div class="card-header">@Html.DisplayNameFor(model => model.ScopeGoals)</div>
                 <div class="card-body">
-                    <p class="card-text text-info">@Html.DisplayFor(model => model.ScopeGoals)</p>
+                    <p class="card-text text-dark">@Html.DisplayFor(model => model.ScopeGoals)</p>
                 </div>
             </div>
             <!-- SCOPE LIMITATIONS-->

@@ -72,6 +72,7 @@ namespace AXCEXONLINE.Controllers
                     {
                         var temp = new CompViewAssignedProj
                         {
+                            ProjectId = Proj.ID,
                             Project_Name = Proj.ProjectName,
                             Assigned_By = p.authorized_assignment,
                             ActiveProj = Proj.IsActive

@@ -19,7 +19,7 @@ namespace AXCEX_ONLINE.Models.ComponentViewModels
         [Display(Name = "Project Active")]
         public bool ActiveProj { get; set; }
 
-
+        public int ProjectId { get; set; }
         // FUTURE: Current Scope
         // FUTURE: Assigned Tasks 
     }

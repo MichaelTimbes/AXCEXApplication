@@ -139,7 +139,7 @@ namespace AXCEXONLINE.Controllers
         // GET: ScopeModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Scopes.ToListAsync());
+            return View(await _context.Scopes.OrderBy(S=>S.ProjectId).ToListAsync());
         }
 
         // GET: ScopeModels/Details/5
