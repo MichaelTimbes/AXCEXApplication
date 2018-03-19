@@ -24,7 +24,8 @@ namespace AXCEX_ONLINE.Models.EmployeeViewModels
         [Display(Name = "Due")]
         public DateTime Due_Date { get; set; }
 
-
+        // For REF
+        public int Project_ID { get; set; }
         // FUTURE: Current Scope
         // FUTURE: Assigned Tasks 
     }

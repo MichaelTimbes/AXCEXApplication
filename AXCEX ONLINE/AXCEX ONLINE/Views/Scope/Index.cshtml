@@ -12,45 +12,58 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProjectId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScopeVersion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScopeAuthor)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScopeManager)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScopeExpectations)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScopeLimitations)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScopeSummary)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScopeGoals)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScopePhase)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScopeStartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScopeEndDate)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParentScope)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScopeVersion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScopeAuthor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScopeManager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScopeExpectations)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScopeLimitations)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScopeSummary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScopeGoals)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScopePhase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScopeStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScopeEndDate)
+            </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParentScope)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectId)
             </td>

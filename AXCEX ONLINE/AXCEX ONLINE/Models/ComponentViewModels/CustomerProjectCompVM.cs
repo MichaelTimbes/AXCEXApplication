@@ -12,10 +12,17 @@ namespace AXCEX_ONLINE.Models.ComponentViewModels
         [Display(Name = "Project")]
         public string Project_Name { get; set; }
 
-        // Who Assigned the Project
-        [Display(Name = "Progress")]
-        public double ProgressPercentage{ get; set; }
-        
+        // Project Progress
+        [Display(Name = "Phase")]
+        public int ProgressPhaseCurrent{ get; set; }
+
+        // Project Progress
+        [Display(Name = "Max Phase")]
+        public int ProgressPhaseMax { get; set; }
+
+        // Project Percentage Progress
+        [Display(Name = "Percent Complete")]
+        public decimal ProgressPercent { get; set; }
         // Display if Active- Optional
         [Display(Name = "Project Active")]
         public bool ActiveProj { get; set; }

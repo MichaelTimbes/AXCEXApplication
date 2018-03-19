@@ -56,16 +56,27 @@ namespace AXCEXONLINE.Controllers
                 foreach(ProjectModel p in projects)
                 {
                     // Find Scope for the Project in Question
-                    var ProjectScope = _context.Scopes.Where(S => S.ProjectId == p.ID).First();
+                    var ProjectScope = _context.Scopes.Where(S => S.ProjectId == p.ID).OrderBy(S=> S.ScopeVersion).Last();
+
+                    // Initialization to Handle DividebyZero Issue
+                    var Percent = (decimal) 0;
+
+                    // Figure Percentage
+                    if (ProjectScope.ScopeMaxPhaseNumber > 0 && ProjectScope.ScopePhaseNumber > 0)
+                    {
+                         Percent = ((decimal)ProjectScope.ScopePhaseNumber / ProjectScope.ScopeMaxPhaseNumber) * 100;
+                        
+                    }
                     var entry = new CustomerProjectCompVM
                     {
                         Project_Name = p.ProjectName,
-                        // CHANGE THIS PERCENTAGE WHEN IMPLEMENTATION IS DONE
-                        ProgressPercentage = 50,
+                        ProgressPhaseCurrent = ProjectScope.ScopePhaseNumber,
+                        ProgressPhaseMax = ProjectScope.ScopeMaxPhaseNumber,
                         ActiveProj = p.IsActive,
                         ProjectId = p.ID,
                         ScopeId = ProjectScope.ID
                     };
+                    entry.ProgressPercent = Percent;
                     ViewList.Add(entry);
                 }
                 ViewData["Message"] = "Here are the results";

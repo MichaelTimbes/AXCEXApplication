@@ -74,6 +74,7 @@ namespace AXCEX_ONLINE.Controllers
                     Assigned_By = p.authorized_assignment,
                     Start_Date = Proj.StartDate,
                     Due_Date = Proj.EndDate,
+                    Project_ID = Proj.ID
                 };
                 ViewList.Add(temp);
             }

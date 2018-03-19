@@ -3,7 +3,6 @@
     ViewData["Title"] = "Customer Projects";
 }
 
-
 <div class="col-sm-8 card text-white bg-primary mb-3" style="max-width: 50rem;">
     @*<div class="card-header">Projects Navigation:</div>*@
     <div class="card-body">
@@ -19,16 +18,15 @@
                     </th>
 
                     <th>
-                        @Html.DisplayNameFor(model => model.ProgressPercentage)
+                       Progress
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ActiveProj)
-                    </th>
+                    
 
                     <th></th>
                 </tr>
             </thead>
             <tbody>
+                <!-- LIST OF PROJECTS -->
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -36,28 +34,21 @@
                             @Html.DisplayFor(modelItem => item.Project_Name)
                         </td>
                        
-                            
+                            <!-- PROGRESS BAR-->
                         <td>
                             <div class="progress">
-                                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" title="@item.ProgressPercentage.ToString()% Complete" role="progressbar" style="width: @item.ProgressPercentage.ToString()%" aria-valuenow="@item.ProgressPercentage.ToString()" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" title="@item.ProgressPercent.ToString()% Complete" role="progressbar" style="width: @item.ProgressPercent.ToString()%" aria-valuenow="@item.ProgressPercent.ToString()" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
 
-                            @*@Html.DisplayFor(modelItem => item.ProgressPercentage) %*@
                         </td>
-                       
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ActiveProj)
-                        </td>
+         
+                        <td></td>
+                        <!-- NAVIGATION -->
                         <td>
                             <div class="row">
-                                <form>
-                                    <button formmethod="get" class="btn-sm btn-info" asp-id="@item.ProjectId" type="submit">Tasks</button>
-                                </form>
+                                <a role="button" class="btn btn-info" title="View Tasks" asp-controller="Scope" asp-action="ViewScope" asp-route-id="@item.ProjectId"><span class="glyphicon glyphicon-list-alt"></span> Tasks</a>
 
-                                <form>
-                                    <button formmethod="get" class="btn-sm btn-warning" type="submit"> Scope</button>
-                                </form>
+                                <a role="button" class="btn btn-warning" title="View Scope" asp-controller="Scope" asp-action="ViewScope" asp-route-id="@item.ProjectId"><span class="glyphicon glyphicon-globe"></span> Scope</a>
 
                             </div>
                         </td>

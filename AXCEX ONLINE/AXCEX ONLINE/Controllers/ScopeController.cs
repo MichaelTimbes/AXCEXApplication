@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AXCEX_ONLINE.Data;
 using AXCEX_ONLINE.Models;
+using AXCEX_ONLINE.Models.ScopeViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AXCEXONLINE.Controllers
 {
@@ -19,6 +21,121 @@ namespace AXCEXONLINE.Controllers
             _context = context;
         }
 
+        /*
+         
+         VIEW SCOPE REGION
+         
+             */
+
+        #region VIEW_SCOPE
+            /* View Scope
+             * Takes a Project ID and Finds the Most Reccent Scope for the Project
+             * If the Id is Null, There will be Nothing Shown but an Error
+             */
+        [HttpGet]
+        public IActionResult ViewScope(int? id)
+        {
+            if (id == null)
+            {
+                ViewData["ErrorMsg"] = "No Project ID";
+                return View();
+
+            }
+            // Find the most reccent scope
+            var ViewModel = _context.Scopes.Where(S => S.ProjectId == id).OrderBy(S => S.ScopeVersion);
+
+            return View(ViewModel.Last());
+        }
+        #endregion VIEW_SCOPE
+
+        /*
+         
+         EDIT SCOPE REGION
+         
+             */
+
+        #region EDIT_SCOPE
+        /* Edit Scope Does the Following:
+         * Takes a Project ID Argument
+         * Finds the Most Reccent Scope 
+         * Returns the View with the Information from the Current Scope
+         * Creates a New Scope and Saves it as an Updated Scope
+         */
+
+        // GET
+        [HttpGet]
+        public IActionResult EditScope(int? id)
+        {
+            if (id == null)
+            {
+                ViewData["ErrorMsg"] = "No Project Selected.";
+                return View("Edit");
+            }
+            // Grabbing the Most Reccent Scope
+            var scope = _context.Scopes.Where(S => S.ProjectId == id).OrderByDescending(S=>S.ScopeVersion).First();
+            var projectname = _context.ProjectModel.Where(P => P.ID == scope.ProjectId).First().ProjectName;
+            var CurrentScope = new EditScopeViewModel
+            {
+                ProjectId = scope.ProjectId,
+                ScopeParent = scope.ID, // Hidden
+                ProjectName = projectname,
+                ScopeAuthor = User.Identity.Name,// Hidden
+                ScopeCurrentVersion = scope.ScopeVersion,
+                UpdatedScopeExpectations = scope.ScopeExpectations,
+                UpdatedScopeGoals = scope.ScopeGoals,
+                UpdatedScopeLimitations = scope.ScopeLimitations,
+                UpdatedScopePhase = scope.ScopePhase,
+                UpdatedScopePhaseNum = scope.ScopePhaseNumber,
+                UpdatedScopePhaseNumberMax = scope.ScopeMaxPhaseNumber,
+                UpdatedScopeSummary = scope.ScopeSummary,
+                ScopeStartDate = scope.ScopeStartDate,
+                ScopeEndDate = scope.ScopeEndDate,
+                ScopeManager = scope.ScopeManager
+            };
+
+            return View(CurrentScope);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        
+        public async Task<IActionResult> EditScope(EditScopeViewModel scope)
+        {
+            // INCREMENT SCOPE VERSION
+           
+
+            var NewScope = new ScopeModel
+            {
+                ProjectId = scope.ProjectId,
+                ParentScope = scope.ScopeParent,
+                ScopeAuthor = scope.ScopeAuthor,
+               
+                ScopeExpectations = scope.UpdatedScopeExpectations,
+                ScopeGoals = scope.UpdatedScopeGoals,
+                ScopeLimitations = scope.UpdatedScopeLimitations,
+                ScopeManager = scope.ScopeManager,
+                ScopeSummary = scope.UpdatedScopeSummary,
+                ScopeVersion = _context.Scopes.Where(S=> S.ProjectId == scope.ProjectId).Count(),
+                ScopeMaxPhaseNumber = scope.UpdatedScopePhaseNumberMax,
+                ScopePhaseNumber = scope.UpdatedScopePhaseNum,
+                ScopePhase = scope.UpdatedScopePhase,
+                ScopeEndDate = scope.ScopeEndDate,
+                ScopeStartDate = scope.ScopeStartDate,
+                
+            };
+            _context.Scopes.Add(NewScope);
+            await _context.SaveChangesAsync();
+            ViewData["Msg"] = "Updated Scope and Added to Database";
+
+            return RedirectToAction("Index");
+        }
+        //POST
+        #endregion EDIT_SCOPE
+
+        /*
+         SCOPE CRUD REGION- THE BASIC CREATE/READ/UPDATE/DELETE METHODS
+             
+             */
+        #region SCOPE_CRUD
         // GET: ScopeModels
         public async Task<IActionResult> Index()
         {
@@ -149,5 +266,6 @@ namespace AXCEXONLINE.Controllers
         {
             return _context.Scopes.Any(e => e.ID == id);
         }
+        #endregion SCOPE_CRUD
     }
 }

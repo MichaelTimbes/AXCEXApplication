@@ -1,0 +1,153 @@
+﻿@model AXCEX_ONLINE.Models.ScopeModel
+<!-- MAY WANT TO MAKE A SPECIFIC VIEW MODEL LATER TO ADD MORE PROJECT SPECIFIC INFO-->
+@{
+    ViewData["Title"] = "ViewScope";
+}
+
+
+@if (@ViewData["ErrorMsg"] != null)
+{
+    <div class="alert alert-dismissible alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4 class="alert-heading">ERROR</h4>
+        <p class="mb-0">@ViewData["ErrorMsg"]</p>
+    </div>
+}
+    <div class="col">
+        <h4>Scope Details</h4>
+        <hr />
+
+        @*<dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScopeVersion)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ScopeVersion)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScopeAuthor)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ScopeAuthor)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScopeManager)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ScopeManager)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScopeExpectations)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ScopeExpectations)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScopeLimitations)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ScopeLimitations)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScopeSummary)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ScopeSummary)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScopeGoals)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ScopeGoals)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScopePhase)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ScopePhase)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScopeStartDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ScopeStartDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ScopeEndDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ScopeEndDate)
+                </dd>
+            </dl>
+        </div>*@
+
+        <!-- ROW 1 -->
+        <div class="row">
+            <!-- BASIC INFORMATION-->
+            <div class="card bg-secondary mb-3 col-md-4" style="max-width: 30rem;">
+                <div class="card-header">Scope Information</div>
+                <div class="card-body">
+                    @*<h4 class="card-title">Secondary card title</h4>*@
+                    <p class="card-text text-dark">@Html.DisplayNameFor(model => model.ScopeVersion): @Html.DisplayFor(model => model.ScopeVersion)</p>
+                    <p class="card-text text-info">@Html.DisplayNameFor(model => model.ScopeAuthor): @Html.DisplayFor(model => model.ScopeAuthor)</p>
+                    <p class="card-text text-info">@Html.DisplayNameFor(model => model.ScopeManager): @Html.DisplayFor(model => model.ScopeManager)</p>
+                </div>
+            </div>
+
+            <!-- SUMMARY-->
+            <div class="card bg-secondary mb-3 col-md-4 col-md-offset-1" style="max-width: 30rem;">
+                <div class="card-header">Scope Summary</div>
+                <div class="card-body">
+                    @*<h4 class="card-title">Secondary card title</h4>*@
+                    <p class="card-text text-dark">@Html.DisplayFor(model => model.ScopeSummary)</p>
+                </div>
+            </div>
+
+           
+            <!-- END ROW 1-->
+        </div>
+
+        <!-- ROW 2 -->
+        <div class="row">
+            <div>
+                <!-- SCOPE PHASE-->
+            </div>
+            <div class="card bg-light mb-3 col-md-4 " style="max-width: 30rem;">
+                <div class="card-header">@Html.DisplayNameFor(model => model.ScopePhase)</div>
+                <div class="card-body">
+                    <p class="card-text text-info">@Html.DisplayFor(model => model.ScopePhase)</p>
+                </div>
+            </div>
+            <!---->
+            <!-- END ROW 2-->
+        </div>
+
+        <!-- ROW 3-->
+        <div class="row">
+            <div class="card bg-light mb-3 col-md-4 " style="max-width: 30rem;">
+                <div class="card-header">@Html.DisplayNameFor(model => model.ScopeGoals)</div>
+                <div class="card-body">
+                    <p class="card-text text-info">@Html.DisplayFor(model => model.ScopeGoals)</p>
+                </div>
+            </div>
+            <!-- SCOPE LIMITATIONS-->
+            <div class="card bg-secondary mb-3 col-md-4 col-md-offset-1" style="max-width: 30rem;">
+                <div class="card-header">Scope Limitations</div>
+                <div class="card-body">
+                    @*<h4 class="card-title">Secondary card title</h4>*@
+                    <p class="card-text text-dark">@Html.DisplayFor(model => model.ScopeLimitations)</p>
+                </div>
+            </div>
+            <!-- END ROW 3-->
+        </div>
+
+    </div>
+        
+@if (User.IsInRole("Administrator"))
+{
+    <div>
+        <a asp-controller="Project" asp-id="@Model.ProjectId" asp-action="ProjectDetails">Project</a>
+    </div>
+
+}

@@ -281,6 +281,7 @@ namespace AXCEX_ONLINE.Controllers
         //GET
         [HttpGet]
         [Authorize(Roles = "Administrator")]
+
         public IActionResult EditProject(int? id)
         {
             // Verify that id is not Null
@@ -315,6 +316,7 @@ namespace AXCEX_ONLINE.Controllers
         //POST
         [HttpPost]
         [Authorize(Roles = "Administrator")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProject(ProjectEditViewClass model, int? id)
         {
             

@@ -11,9 +11,10 @@ using System;
 namespace AXCEXONLINE.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    partial class ProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180318003035_ADD_NUMERICAL_PHASE")]
+    partial class ADD_NUMERICAL_PHASE
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,9 +94,6 @@ namespace AXCEXONLINE.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("SCOPE_ID");
-
-                    b.Property<int>("ParentScope")
-                        .HasColumnName("SCOPE_PARENT_ID");
 
                     b.Property<int>("ProjectId")
                         .HasColumnName("Project_ID");
