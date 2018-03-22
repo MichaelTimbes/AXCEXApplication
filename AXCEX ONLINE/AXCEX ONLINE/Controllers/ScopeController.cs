@@ -64,6 +64,7 @@ namespace AXCEXONLINE.Controllers
 
         // GET
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public IActionResult EditScope(int? id)
         {
             if (id == null)
@@ -97,7 +98,6 @@ namespace AXCEXONLINE.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        
         public async Task<IActionResult> EditScope(EditScopeViewModel scope)
         {
             // INCREMENT SCOPE VERSION
@@ -133,16 +133,19 @@ namespace AXCEXONLINE.Controllers
 
         /*
          SCOPE CRUD REGION- THE BASIC CREATE/READ/UPDATE/DELETE METHODS
+         ONLY THE DELETE IS ACTIVE- AUTHORIZATION GRANTED FOR ADMIN
              
              */
         #region SCOPE_CRUD
         // GET: ScopeModels
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Scopes.OrderBy(S=>S.ProjectId).ToListAsync());
         }
 
         // GET: ScopeModels/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -160,80 +163,81 @@ namespace AXCEXONLINE.Controllers
             return View(scopeModel);
         }
 
-        // GET: ScopeModels/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //// GET: ScopeModels/Create
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // POST: ScopeModels/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ProjectId,ScopeVersion,ScopeAuthor,ScopeManager,ScopeExpectations,ScopeLimitations,ScopeSummary,ScopeGoals,ScopePhase,ScopeStartDate,ScopeEndDate")] ScopeModel scopeModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(scopeModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(scopeModel);
-        }
+        //// POST: ScopeModels/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("ID,ProjectId,ScopeVersion,ScopeAuthor,ScopeManager,ScopeExpectations,ScopeLimitations,ScopeSummary,ScopeGoals,ScopePhase,ScopeStartDate,ScopeEndDate")] ScopeModel scopeModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(scopeModel);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(scopeModel);
+        //}
 
-        // GET: ScopeModels/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: ScopeModels/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var scopeModel = await _context.Scopes.SingleOrDefaultAsync(m => m.ID == id);
-            if (scopeModel == null)
-            {
-                return NotFound();
-            }
-            return View(scopeModel);
-        }
+        //    var scopeModel = await _context.Scopes.SingleOrDefaultAsync(m => m.ID == id);
+        //    if (scopeModel == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(scopeModel);
+        //}
 
-        // POST: ScopeModels/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ProjectId,ScopeVersion,ScopeAuthor,ScopeManager,ScopeExpectations,ScopeLimitations,ScopeSummary,ScopeGoals,ScopePhase,ScopeStartDate,ScopeEndDate")] ScopeModel scopeModel)
-        {
-            if (id != scopeModel.ID)
-            {
-                return NotFound();
-            }
+        //// POST: ScopeModels/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("ID,ProjectId,ScopeVersion,ScopeAuthor,ScopeManager,ScopeExpectations,ScopeLimitations,ScopeSummary,ScopeGoals,ScopePhase,ScopeStartDate,ScopeEndDate")] ScopeModel scopeModel)
+        //{
+        //    if (id != scopeModel.ID)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(scopeModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ScopeModelExists(scopeModel.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(scopeModel);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(scopeModel);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!ScopeModelExists(scopeModel.ID))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(scopeModel);
+        //}
 
         // GET: ScopeModels/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -253,6 +257,7 @@ namespace AXCEXONLINE.Controllers
 
         // POST: ScopeModels/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

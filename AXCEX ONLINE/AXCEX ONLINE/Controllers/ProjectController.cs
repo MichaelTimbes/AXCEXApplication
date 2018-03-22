@@ -238,7 +238,7 @@ namespace AXCEX_ONLINE.Controllers
             var ScopeProj = _context.Scopes.Where(S=> S.ProjectId == projectModel.ID).OrderBy(S=> S.ScopeVersion);
 
             // If The Scope Does Exist, Add it
-            if (ScopeProj.SingleOrDefault() == null)
+            if (ScopeProj == null)
             {
                 // Add a Temp Scope
                 var TempScope = new ScopeModel

@@ -47,6 +47,11 @@ namespace AXCEX_ONLINE.Controllers
             _logger = logger;
             _projectcontext = projectcontext;
         }
+        /*
+
+        VIEW ASSIGNED PROJECTS REGION
+
+            */
         #region VIEW_ASSIGNED_PROJECTS
         [HttpGet]
         public async Task<IActionResult> ViewAssignedProjects(int? id)
@@ -82,7 +87,13 @@ namespace AXCEX_ONLINE.Controllers
         }
         #endregion VIEW_ASSIGNED_PROJECTS
 
-      
+        /*
+
+        EMPLOYEE LOGIN REGION
+
+            */
+
+        #region EMPLOYEE_LOGIN
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> EmployeeLogin(string returnUrl = null)
@@ -157,9 +168,15 @@ namespace AXCEX_ONLINE.Controllers
             throw new NotImplementedException();
         }
 
+        #endregion EMPLOYEE_LOGIN
 
+        /*
 
+        EMPLOYEE HOME CONTROLLER METHOD REGION
 
+            */
+
+        #region EMPLOYEE_HOME
         // GET Employee/EmployeeHome/
 
         public async Task<IActionResult> EmployeeHome(string id = null)
@@ -183,7 +200,16 @@ namespace AXCEX_ONLINE.Controllers
                 return NotFound();
             }
         }
-        
+        #endregion EMPLOYEE_HOME
+
+        /*
+
+        CREATE EMPLOYEE (CUSTOM VERSION) REGION
+
+            */
+
+
+        #region CREATE_EMP_ADMIN
         // GET: EmployeeModels/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -201,7 +227,7 @@ namespace AXCEX_ONLINE.Controllers
 
             return View(employeeModel);
         }
-        #region CREATE_EMP_ADMIN
+        
         [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult RegisterEmployeeAdmin(string returnUrl = null)
@@ -283,6 +309,14 @@ namespace AXCEX_ONLINE.Controllers
         }
 
         #endregion CREATE_EMP_ADMIN
+
+        /*
+
+        REGISTER EMPLOYEE REGION
+
+            */
+
+        #region REGISTER_EMPLOYEE
         [HttpGet]
         [AllowAnonymous]
         public IActionResult RegisterEmployee(string returnUrl = null)
@@ -364,54 +398,32 @@ namespace AXCEX_ONLINE.Controllers
             _logger.LogDebug("Model Invalid in Register Employee");
             return RedirectToAction(controllerName: "Home", actionName: "Index");
         }
+        #endregion REGISTER_EMPLOYEE
 
-        private IActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(controllerName:"Employee", actionName:"EmployeeHome");
-            }
-        }
-
-        // GET: EmployeeModels/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-        
-        // POST: EmployeeModels/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,EMP_FNAME,EMP_LNAME,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] EmployeeModel employeeModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(employeeModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(employeeModel);
-        }
-
-
-
+        /*
+         
+         EDIT EMPLOYEE REGION
+         
+             */
+             
         #region EDIT_METHOD
         // GET: Employee/EditEmployee/?
         //[Authorize(Roles = "Employee")]
+        [HttpGet]
         [Authorize(Roles = "Administrator,Employee")]
-        public async Task<IActionResult> EditEmployee(string returnUrl = null)
+        public IActionResult EditEmployee(int? EmpID)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            var user = await _userManager.GetUserAsync(User);
-            var userContext = _context.EmployeeModel.Where(m => m.Id == user.Id).First();
-            var updateForm = new EMPEditViewModel
+            // If there isn't a vaule passed, then use the active user
+            if (EmpID == null)
             {
+                var UID = _userManager.GetUserId(User);
+                EmpID = _context.EmployeeModel.Where(E => E.Id == UID).First().EMPID;
+            }
+            var userContext = _context.EmployeeModel.Where(m => m.EMPID == EmpID).First();
+            
+                var updateForm = new EMPEditViewModel
+            {
+                EmpID = userContext.EMPID,
                 Employee_fname = userContext.EMP_FNAME,
                 Employee_lname = userContext.EMP_LNAME,
                 Employee_userName = userContext.UserName,
@@ -431,46 +443,13 @@ namespace AXCEX_ONLINE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditEmployee(EMPEditViewModel model)
         {
+   
+                    var userUpdate = _context.EmployeeModel.Where(m => m.EMPID == model.EmpID).First();
 
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.GetUserAsync(User);
-
-                var email = user.Email;
-                if (model.Email != email)
-                {
-                    var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
-                    if (!setEmailResult.Succeeded)
-                    {
-                        throw new ApplicationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
-                    }
-                }
-
-                var phoneNumber = user.PhoneNumber;
-                if (model.PhoneNumber != phoneNumber)
-                {
-                    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
-                    if (!setPhoneResult.Succeeded)
-                    {
-                        throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
-                    }
-                }
-
-                var Uname = user.UserName;
-                if (model.Employee_userName != Uname)
-                {
-                    var setUnameResult = await _userManager.SetUserNameAsync(user, model.Employee_userName);
-                    if (!setUnameResult.Succeeded)
-                    {
-                        throw new ApplicationException($"Unexpected error occurred setting new user name for user with ID '{user.Id}'.");
-                    }
-                }
-                    
-                if (user != null)
-                {
-                    var userUpdate = _context.EmployeeModel.Where(m => m.Id == user.Id).First();
+                    // Things to Update
                     userUpdate.EMP_FNAME = model.Employee_fname;
                     userUpdate.EMP_LNAME = model.Employee_lname;
+                    userUpdate.UserName = model.Employee_userName;
                     userUpdate.Email = model.Email;
                     userUpdate.PhoneNumber = model.PhoneNumber;
 
@@ -486,19 +465,17 @@ namespace AXCEX_ONLINE.Controllers
 
                         return View();
                     }
-                    return RedirectToAction(actionName: "EmployeeHome");
-
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            // Something went terribly wrong
-            _logger.LogCritical("Something is wrong with the model state in Employee controller-EditEmployee.");
-            return View();
+            ViewData["Msg"] = "User Updated";
+                    return View(model);
+            
         }
         #endregion EDIT_METHOD
+
+        /*
+
+        DELETE EMPLOYEE REGION
+
+            */
 
         #region DELETE_METHOD
         [Authorize(Roles = "Administrator")]
@@ -535,12 +512,52 @@ namespace AXCEX_ONLINE.Controllers
         }
         #endregion DELETE_METHOD
 
+        /*
+
+        HELPER METHODS AND CREATE METHOD REGION
+
+            */
+
+        #region HELPER_METHODS
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(controllerName: "Employee", actionName: "EmployeeHome");
+            }
+        }
+
+        // GET: EmployeeModels/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: EmployeeModels/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,EMP_FNAME,EMP_LNAME,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] EmployeeModel employeeModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(employeeModel);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(employeeModel);
+        }
         // GET: EmployeeModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EmployeeModel.Where(e=> !e.EMPID.Equals(null)).OrderBy(e=>e.EMPID).ToListAsync());
+            return View(await _context.EmployeeModel.Where(e => !e.EMPID.Equals(null)).OrderBy(e => e.EMPID).ToListAsync());
         }
-        #region HELPER_METHODS
+
         private bool EmployeeModelExists(string id)
         {
             return _context.EmployeeModel.Any(e => e.Id == id);

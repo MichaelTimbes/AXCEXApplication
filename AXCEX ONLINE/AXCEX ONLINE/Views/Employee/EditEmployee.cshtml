@@ -8,11 +8,18 @@
 
 <h4>EmployeeModel</h4>
 <hr />
+@if (@ViewData["Msg"] != null)
+{
+    <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Success</strong> @ViewData["Msg"]
+    </div>
+}
 <div class="row">
     <div class="col-md-4">
         <form asp-action="EditEmployee">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+            <input type="hidden" asp-for="EmpID" />
             <div class="form-group">
                 <label asp-for="Employee_fname" class="control-label"></label>
                 <input asp-for="Employee_fname" class="form-control" />
@@ -43,13 +50,13 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
-                
-               <a role="button" class="btn btn-primary" asp-controller="Manage" asp-action="SetPassword">Change Password</a>
-                
+
+                <a role="button" class="btn btn-primary" asp-controller="Manage" asp-action="SetPassword">Change Password</a>
+
             </div>
         </form>
     </div>
-    
+
 </div>
 
 @section Scripts {

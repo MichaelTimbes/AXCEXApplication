@@ -53,10 +53,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
+            @*<td>
+            <a asp-controller="Employee" asp-action="EditEmployee"  asp-route-id="@item.EMPID">Edit</a> |
+            <a asp-controller="Employee" asp-action="Details" asp-route-id="@item.EMPID">Details</a> |
+            <a asp-controller="Employee" asp-action="Delete" asp-route-id="@item.EMPID">Delete</a>
+        </td>*@
             <td>
-                <a asp-controller="Employee" asp-action="EditEmployee" asp-route-id="@item.Id">Edit</a> |
-                <a asp-controller="Employee" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-controller="Employee" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <form asp-controller="Employee" asp-action="EditEmployee" method="get" role="form">
+                    <div>
+                        <button type="submit" class="btn btn-info" name="EmpID" value="@item.EMPID"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                    </div>
+                </form>
             </td>
         </tr>
 }
