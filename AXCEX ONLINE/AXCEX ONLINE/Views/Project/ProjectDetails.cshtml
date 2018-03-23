@@ -8,64 +8,66 @@
 @inject UserManager<ApplicationUser> UserManager
 <h2>Project Details</h2>
 
-<div >
+
     <h4>ProjectModel</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ProjectName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProjectName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Custid)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Custid)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProjBudget)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProjBudget)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProjCost)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProjCost)
-        </dd>
-        <dt>
-            Employees Assigned
-        </dt>
-        @foreach (var item in Model.Employees)
-    {
-        <dd class="text-uppercase text-dark">
-            @Html.DisplayFor(itemData => item.EMP_FNAME) @Html.DisplayFor(itemData => item.EMP_LNAME)
-        </dd>
-}
-    </dl>
-</div>
-<div class="dl-horizontal">
+    <div class="row">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ProjectName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProjectName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Custid)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Custid)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProjBudget)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProjBudget)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProjCost)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ProjCost)
+            </dd>
+            <dt>
+                Employees Assigned
+            </dt>
+            @foreach (var item in Model.Employees)
+        {
+            <dd class="text-uppercase text-dark">
+                @Html.DisplayFor(itemData => item.EMP_FNAME) @Html.DisplayFor(itemData => item.EMP_LNAME)
+            </dd>
+    }
+        </dl>
+        <div class=" row">
 
-    <div class="card border-info mb-3" style="max-width: 20rem;">
-        <div class="card-header">Project Scope Version @Model.CurrentScope.ScopeVersion</div>
-        <div class="card-body">
-            <h4 class="card-title">Scope Summary</h4>
-            <p class="card-text">
-                @Model.CurrentScope.ScopeSummary
-            </p>
+            <div class="card border-dark mb-3 col-lg-offset-4" style="min-width: 20rem;">
+                <div class="card-header">Project Scope Version @Model.CurrentScope.ScopeVersion</div>
+                <div class="card-body">
+                    <h4 class="card-title">Scope Summary</h4>
+                    <p class="card-text">
+                        @Model.CurrentScope.ScopeSummary
+                    </p>
+                </div>
+            </div>
+
         </div>
     </div>
 
-</div>
 @if (User.IsInRole("Administrator"))
 {
     <div>
-        <a asp-action="EditProject" asp-route-id=@Model.GetProjectID() title="Edit Basic Details">Edit</a> |
-        <a asp-controller="Project" asp-action="AssignedEmployees" asp-route-id=@Model.GetProjectID() title="View Assigned Employees">View Assigned</a>|
-        <a asp-controller="Project" asp-action="AllProjectsPartial">Project List</a>
+        <a role="button" class="btn btn-default" asp-action="EditProject" asp-route-id=@Model.GetProjectID() title="Edit Basic Details">Edit</a> 
+        <a role="button" class="btn btn-info" asp-controller="Project" asp-action="AssignedEmployees" asp-route-id=@Model.GetProjectID() title="View Assigned Employees">View Assigned</a>
+        <a role="button" class="btn btn-default" asp-controller="Project" asp-action="AllProjectsPartial">Project List</a>
     </div>
 }
 
@@ -77,3 +79,4 @@ else
         <a asp-controller="Project" asp-action="AllProjectsPartial">Project List</a>
     </div>
 }
+

@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="col-sm-4 card text-white bg-primary mb-3" style="max-width: 50rem;">
+    <div class="col-sm-4 card text-white bg-primary mb-3 col-lg-offset-1" style="max-width: 50rem;">
         <div class="card-header">Employee Projects Navigation:</div>
         <div class="card-body">
             <h5 class="card-title">Projects Assigned:</h5>
@@ -43,7 +43,7 @@
         </div>
     </div>
 </div>
-<div class="justify-content-md-center">
+<div class="row">
     @await Component.InvokeAsync("ProjectVC", new { id = @Model.EMPID })
 </div>
 

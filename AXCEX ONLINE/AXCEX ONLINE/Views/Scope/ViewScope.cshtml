@@ -20,6 +20,7 @@
         <!-- ROW 1 -->
         <div class="row">
             <!-- BASIC INFORMATION-->
+            <!-- ROW 1 COLUMN 1-->
             <div class="card bg-secondary mb-3 col-md-4" style="max-width: 30rem;">
                 <div class="card-header">Scope Information</div>
                 <div class="card-body">
@@ -31,6 +32,7 @@
             </div>
 
             <!-- SUMMARY-->
+            <!-- ROW 1 COLUMN 2-->
             <div class="card bg-secondary mb-3 col-md-4 col-md-offset-1" style="max-width: 30rem;">
                 <div class="card-header">Scope Summary</div>
                 <div class="card-body">
@@ -39,12 +41,24 @@
                 </div>
             </div>
 
-           
+            <!-- START/END DATE-->
+            <!-- ROW 1 COLUMN 3-->
+            <div class="card bg-secondary mb-3 col-md-4 col-md-offset-1" style="max-width: 30rem;">
+                <div class="card-header">Scope Start and End</div>
+                <div class="card-body">
+                    
+                    <p class="card-text text-dark">Start Date: @Html.DisplayFor(model => model.ScopeStartDate)</p>
+                    <p class="card-text text-dark">End Date: @Html.DisplayFor(model => model.ScopeEndDate)</p>
+                </div>
+            </div>
+
+
             <!-- END ROW 1-->
         </div>
 
         <!-- ROW 2 -->
         <div class="row">
+                <!-- ROW 2 COLUMN 1-->
             <div>
                 <!-- SCOPE PHASE-->
             </div>
@@ -54,19 +68,33 @@
                     <p class="card-text text-dark">@Html.DisplayFor(model => model.ScopePhase)</p>
                 </div>
             </div>
-            <!---->
-            <!-- END ROW 2-->
+                 <!-- ROW 2 COLUMN 2-->
+            
+            <div>
+                <!-- SCOPE EXPECTATIONS-->
+            </div>
+
+            <div class="card bg-light mb-3 col-md-4 col-md-offset-1 " style="max-width: 30rem;">
+                <div class="card-header">@Html.DisplayNameFor(model => model.ScopeExpectations)</div>
+                <div class="card-body">
+                    <p class="card-text text-dark">@Html.DisplayFor(model => model.ScopeExpectations)</p>
+                </div>
+            </div>
+                <!-- END ROW 2-->
         </div>
 
         <!-- ROW 3-->
         <div class="row">
+            <!-- ROW 3 COLUMN 1-->
             <div class="card bg-light mb-3 col-md-4 " style="max-width: 30rem;">
                 <div class="card-header">@Html.DisplayNameFor(model => model.ScopeGoals)</div>
                 <div class="card-body">
                     <p class="card-text text-dark">@Html.DisplayFor(model => model.ScopeGoals)</p>
                 </div>
             </div>
+
             <!-- SCOPE LIMITATIONS-->
+            <!-- ROW 3 COLUMN 2-->
             <div class="card bg-secondary mb-3 col-md-4 col-md-offset-1" style="max-width: 30rem;">
                 <div class="card-header">Scope Limitations</div>
                 <div class="card-body">

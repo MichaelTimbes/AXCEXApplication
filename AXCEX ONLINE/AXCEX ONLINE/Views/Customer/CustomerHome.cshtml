@@ -5,11 +5,12 @@
 }
 
 <h2>Customer Dashboard</h2>
-
+<hr/>
 <div class="row">
-
+    <!-- ROW 1 COLUMN 1-->
+    <!-- Account Navigation-->
     <div class="card border-info mb-3" style="max-width: 50rem;">
-        <div class="card-header">Employee Account Navigation:</div>
+        <div class="card-header">Customer Account Navigation:</div>
         <div class="card-body">
             <h5 class="card-title">Hello, @Model.CustomerName.</h5>
             <p class="card-text">
@@ -24,6 +25,21 @@
             </div>
         </div>
     </div>
+    <!-- ROW 1 COLUMN 2-->
+    @if (Model.NumProjects > 0)
+    {
+        <div class="col-md-offset-1">
+            @await Component.InvokeAsync("CustomerProjectVC", new { customer_email = @Model.Email })
+        </div>
+    }
+    else
+    {
+        <p>
+            <span class="glyphicon glyphicon-bell"> No Active Projects</span>
+        </p>
+
+
+    }
 </div>
 <div class="row">
     <div class="card text-white bg-dark mb-3" style="max-width: 50rem;">
@@ -38,20 +54,7 @@
 
     </div>
 </div>
-@if (Model.NumProjects > 0)
-{
-    <div class="row justify-content-md-center">
-        @await Component.InvokeAsync("CustomerProjectVC", new { customer_email = @Model.Email })
-    </div>
-}
-else
-{
-    <p>
-        <span class="glyphicon glyphicon-bell"> No Active Projects</span>
-    </p>
 
-        
-}
 
 
 
