@@ -1,60 +1,129 @@
 ﻿@model AXCEX_ONLINE.Models.CustomerViewModels.CustomerHomeVM
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "EmployeeHome";
 }
 
-<h2>Customer Dashboard</h2>
-<hr/>
-<div class="row">
-    <!-- ROW 1 COLUMN 1-->
-    <!-- Account Navigation-->
-    <div class="card border-info mb-3" style="max-width: 50rem;">
-        <div class="card-header">Customer Account Navigation:</div>
-        <div class="card-body">
-            <h5 class="card-title">Hello, @Model.CustomerName.</h5>
-            <p class="card-text">
-                Below are links to edit your account information and manage other account
-                related information.
-            </p>
-            <div class="row">
-                <form asp-controller="Manage" asp-action="Index">
-                    <button class="btn-primary" type="submit" formmethod="get">Edit Account</button>
-                </form>
 
+
+<div class="container-fluid">
+
+    <h3>Your Dashboard</h3>
+    <hr />
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#AccountOverview" data-toggle="tab" aria-expanded="false">Account Overview</a>
+
+        </li>
+
+        <li>
+            <a href="#Projects" data-toggle="tab" aria-expanded="true">Projects</a>
+        </li>
+        <li>
+            <a>Disabled</a>
+        </li>
+
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+
+        <div class="tab-pane fade in active" style="padding-left:20px" id="AccountOverview">
+
+            <div class="row" style="padding-top:15px;padding-left:10px">
+
+                <p class="text-info" style="padding-top:15px;">
+
+                    Below are links to edit your account information and manage other account
+                    related information.
+
+                </p>
+
+                <div class="row" style="padding-left:inherit; padding-bottom:10px">
+                    Insert a Partial View of Customer Details Here
+                </div>
+                <div class="row" style="padding-left:inherit">
+                    <form asp-controller="Manage" asp-action="Index">
+                        <button class="btn-primary" type="submit" formmethod="get">Edit Account</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane" id="Projects">
+
+            <div class="row" style="padding-left:20px">
+                <h3 class="text-muted">Your Projects:</h3>
+                <div class="row" style="padding-left:10px">
+                    @if (Model.NumProjects > 0)
+                    {
+                        <div class="col-md-offset-1">
+                            @await Component.InvokeAsync("CustomerProjectVC", new { customer_email = @Model.Email })
+                        </div>
+                    }
+                    else
+                    {
+                        <p>
+                            <span class="glyphicon glyphicon-bell"> No Active Projects</span>
+                        </p>
+
+
+                    }
+                </div>
             </div>
         </div>
     </div>
+
+    @*<div class="row">
+        <!-- ROW 1 COLUMN 1-->
+        <!-- Account Navigation-->
+        <div class="card border-info mb-3" style="max-width: 50rem;">
+            <div class="card-header">Customer Account Navigation:</div>
+            <div class="card-body">
+                <h5 class="card-title">Hello, @Model.CustomerName.</h5>
+                <p class="card-text">
+                    Below are links to edit your account information and manage other account
+                    related information.
+                </p>
+                <div class="row">
+                    <form asp-controller="Manage" asp-action="Index">
+                        <button class="btn-primary" type="submit" formmethod="get">Edit Account</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>*@
     <!-- ROW 1 COLUMN 2-->
-    @if (Model.NumProjects > 0)
-    {
-        <div class="col-md-offset-1">
-            @await Component.InvokeAsync("CustomerProjectVC", new { customer_email = @Model.Email })
-        </div>
-    }
-    else
-    {
-        <p>
-            <span class="glyphicon glyphicon-bell"> No Active Projects</span>
-        </p>
-
-
-    }
-</div>
-<div class="row">
-    <div class="card text-white bg-dark mb-3" style="max-width: 50rem;">
-        <div class="card-header">Projects Navigation:</div>
-        <div class="card-body">
-            <h5 class="card-title">Projects:</h5>
-            <p class="card-text">
-                Here you'll find the links to view an on going project and see the details on things like cost and project tasks being completed when.
+    @*@if (Model.NumProjects > 0)
+        {
+            <div class="col-md-offset-1">
+                @await Component.InvokeAsync("CustomerProjectVC", new { customer_email = @Model.Email })
+            </div>
+        }
+        else
+        {
+            <p>
+                <span class="glyphicon glyphicon-bell"> No Active Projects</span>
             </p>
 
-        </div>
 
-    </div>
+        }*@
+    @*</div>
+        <div class="row">
+            <div class="card text-white bg-dark mb-3" style="max-width: 50rem;">
+                <div class="card-header">Projects Navigation:</div>
+                <div class="card-body">
+                    <h5 class="card-title">Projects:</h5>
+                    <p class="card-text">
+                        Here you'll find the links to view an on going project and see the details on things like cost and project tasks being completed when.
+                    </p>
+
+                </div>
+
+            </div>
+        </div>*@
 </div>
-
 
 
 

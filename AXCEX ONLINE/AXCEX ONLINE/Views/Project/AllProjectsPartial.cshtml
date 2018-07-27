@@ -72,6 +72,7 @@
                         <a role="button" class="btn btn-primary" asp-controller="Project" asp-action="AssignEmployee" asp-route-id="@item.ID">Assign Employees</a>
                         <a role="button" class="btn btn-outline-info" asp-controller="Project" asp-action="AssignedEmployees" asp-route-id="@item.ID">View Assigned</a>
                         <a role="button" method="get" class="btn btn-outline-success" asp-controller="Scope" asp-action="EditScope" asp-route-id="@item.ID">Project Scope</a>
+                        <a role="button" method="get" class="btn btn-outline-success" asp-controller="WBS" asp-action="CreateWBS" asp-route-id="@item.ID">Assign Tasks</a>
                     </div>
                 </td>
             </tr>

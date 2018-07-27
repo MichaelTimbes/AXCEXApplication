@@ -26,11 +26,12 @@ namespace AXCEX_ONLINE
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             /* Db Context
              * Use Sqlite for MACOSX
              * Use SqlServer for Windows
              */
+            
             services.AddDbContext<ApplicationDbContext>(options =>
             //options.UseSqlite("Data Source=main.db"));
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -39,7 +40,15 @@ namespace AXCEX_ONLINE
             //options.UseSqlite("Data Source=main.db"));
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(
+                options =>
+                {
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = true;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredLength = 6;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -99,12 +108,13 @@ namespace AXCEX_ONLINE
             });
             CreateRoles(serviceProvider);
         }
+
         private void CreateRoles(IServiceProvider serviceProvider)
         {
             const string adminRoleName = "Administrator";
             string[] roleNames = { adminRoleName, "Employee", "Customer" };
 
-            foreach (string roleName in roleNames)
+            foreach (var roleName in roleNames)
             {
                 CreateRole(serviceProvider, roleName);
             }
@@ -112,18 +122,18 @@ namespace AXCEX_ONLINE
 
 
         }
+
+
         private static void CreateRole(IServiceProvider serviceProvider, string roleName)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            Task<bool> roleExists = roleManager.RoleExistsAsync(roleName);
+            var roleExists = roleManager.RoleExistsAsync(roleName);
             roleExists.Wait();
 
-            if (!roleExists.Result)
-            {
-                Task<IdentityResult> roleResult = roleManager.CreateAsync(new IdentityRole(roleName));
-                roleResult.Wait();
-            }
+            if (roleExists.Result) return;
+            var roleResult = roleManager.CreateAsync(new IdentityRole(roleName));
+            roleResult.Wait();
         }
     }
 }

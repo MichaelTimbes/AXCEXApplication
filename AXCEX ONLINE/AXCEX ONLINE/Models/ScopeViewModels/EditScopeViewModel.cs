@@ -18,18 +18,22 @@ namespace AXCEX_ONLINE.Models.ScopeViewModels
         
         // Declaration of Expectations
         [Display(Name = "SCOPE EXPECTATIONS")]
+        [DataType(DataType.MultilineText)]
         public string UpdatedScopeExpectations { get; set; }
 
         // Declaration of Limitations
         [Display(Name = "SCOPE IMITATIONS")]
+        [DataType(DataType.MultilineText)]
         public string UpdatedScopeLimitations { get; set; }
 
         // Scope Summary
         [Display(Name = "SCOPE SUMMARY")]
+        [DataType(DataType.MultilineText)]
         public string UpdatedScopeSummary { get; set; }
 
         // Declaration of Goals
         [Display(Name = "SCOPE GOALS")]
+        [DataType(DataType.MultilineText)]
         public string UpdatedScopeGoals { get; set; }
 
         // Phase of the Project

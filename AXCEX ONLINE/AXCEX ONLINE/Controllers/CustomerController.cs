@@ -31,7 +31,7 @@ namespace AXCEXONLINE.Controllers
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AXCEX_ONLINE.Controllers.AccountController> logger)
+            ILogger<AccountController> logger)
         {
             _context = context;
             _appcontext = appcontext;

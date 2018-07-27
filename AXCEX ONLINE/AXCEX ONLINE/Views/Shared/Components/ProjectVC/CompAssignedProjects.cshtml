@@ -4,48 +4,50 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Your Assigned Active Projects</h2>
 
 
-<table class="table">
+<h5 class="text-muted">Your Assigned Active Projects</h5>
+<table class="table" style="min-width:310px;max-width:1000px">
+    
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Project_Name)
+            <th >
+               Project
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.Assigned_By)
+               Manager
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ActiveProj)
+                Active
             </th>
 
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Project_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Assigned_By)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assigned_By)
+                </td>
 
-            <th>
-                @Html.DisplayFor(modelItem => item.ActiveProj)
-            </th>
-            <td>
-                <div class="row">
-                    <a role="button" class="btn btn-info" title="View Tasks" asp-controller="Scope" asp-action="ViewScope" asp-route-id="@item.ProjectId"><span class="glyphicon glyphicon-list-alt"></span> Tasks</a>
+                <th>
+                    @Html.DisplayFor(modelItem => item.ActiveProj)
+                </th>
+                <td>
+                    <div class="row">
+                        <a role="button" class="btn btn-info"  style="max-width:85px" title="View Tasks" asp-controller="Scope" asp-action="ViewScope" asp-route-id="@item.ProjectId"><span class="glyphicon glyphicon-list-alt"></span> Tasks</a>
 
-                    <a role="button" class="btn btn-warning" title="View Scope" asp-controller="Scope" asp-action="ViewScope" asp-route-id="@item.ProjectId"><span class="glyphicon glyphicon-globe"></span> Scope</a>
+                        <a role="button" class="btn btn-warning" style="max-width:85px" title="View Scope" asp-controller="Scope" asp-action="ViewScope" asp-route-id="@item.ProjectId"><span class="glyphicon glyphicon-globe"></span> Scope</a>
 
-                </div>
-            </td>
-        </tr>
-}
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

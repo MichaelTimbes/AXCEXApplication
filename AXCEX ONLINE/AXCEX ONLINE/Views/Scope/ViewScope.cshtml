@@ -23,8 +23,9 @@
             <!-- ROW 1 COLUMN 1-->
             <div class="card bg-secondary mb-3 col-md-4" style="max-width: 30rem;">
                 <div class="card-header">Scope Information</div>
-                <div class="card-body">
+                <div class="card-body" style="max-width: inherit; max-height:15rem; overflow: auto;">
                     @*<h4 class="card-title">Secondary card title</h4>*@
+
                     <p class="card-text text-dark">@Html.DisplayNameFor(model => model.ScopeVersion): @Html.DisplayFor(model => model.ScopeVersion)</p>
                     <p class="card-text text-dark">@Html.DisplayNameFor(model => model.ScopeAuthor): @Html.DisplayFor(model => model.ScopeAuthor)</p>
                     <p class="card-text text-dark">@Html.DisplayNameFor(model => model.ScopeManager): @Html.DisplayFor(model => model.ScopeManager)</p>
@@ -37,7 +38,9 @@
                 <div class="card-header">Scope Summary</div>
                 <div class="card-body">
                     @*<h4 class="card-title">Secondary card title</h4>*@
-                    <p class="card-text text-dark">@Html.DisplayFor(model => model.ScopeSummary)</p>
+                    <p class="card-text text-dark" style="max-width: inherit; max-height:15rem; overflow: auto;">
+                        @Html.DisplayFor(model => model.ScopeSummary)
+                    </p>
                 </div>
             </div>
 

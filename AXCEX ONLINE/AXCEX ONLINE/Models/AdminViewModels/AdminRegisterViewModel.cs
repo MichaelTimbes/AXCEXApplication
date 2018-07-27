@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace AXCEX_ONLINE.Models.AdminViewModels
     public class AdminRegisterViewModel
     {
         
+      
         [Required]
         [Display(Name = "Admin User Name")]
         public string UserName { get; set; }
@@ -26,8 +28,9 @@ namespace AXCEX_ONLINE.Models.AdminViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]       
         public string ConfirmPassword { get; set; }
 
+        
     }
 }

@@ -4,20 +4,19 @@
 }
 
 <h2> @ViewData["Title"]</h2>
-
-<p>
-    Hello, @Model.UserName!
-</p>
-
-
+<hr/>
 
 <div class="row">
-    <div class="col-sm-4 card text-white bg-primary mb-3" style="min-width: 20rem;">
+
+    <!-- Project Management Section -->
+    <div class="card border-dark mb-3 col-md-offset-1" style="max-width: 30rem;">
         <div class="card-header text-info">Project Management Section:</div>
         <div class="card-body">
             <h5 class="card-title">Project Management</h5>
-            <p class="card-text">Collection of links to manage project related information. You can create, edit, and delete projects in the 
-            project list.</p>
+            <p class="card-text">
+                Collection of links to manage project related information. You can create, edit, and delete projects in the
+                project list.
+            </p>
             <div class="list">
                 <ul>
                     <li><a class="text-success" asp-controller="Project" asp-action="CreateProject">Create Project</a></li>
@@ -27,7 +26,8 @@
         </div>
     </div>
 
-    <div class="col-sm-4 card text-white bg-primary mb-3" style="min-width: 20rem;">
+    <!-- Employee Management Section -->
+    <div class="card border-dark mb-3 col-md-offset-1" style="max-width: 30rem;">
         <div class="card-header text-info">Employee Management Section:</div>
         <div class="card-body">
             <h5 class="card-title">Employee Management</h5>
@@ -41,7 +41,8 @@
         </div>
     </div>
 
-    <div class="col-sm-4 card text-white bg-primary mb-3" style="min-width: 20rem;">
+    <!-- CUSTOMER MANAGEMENT SECTION -->
+    <div class="card border-dark mb-3 col-md-offset-1" style="max-width: 30rem;">
         <div class="card-header text-info">Customer Management Section:</div>
         <div class="card-body">
             <h5 class="card-title">Customer Management</h5>
@@ -54,6 +55,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 

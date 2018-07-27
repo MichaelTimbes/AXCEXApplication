@@ -56,13 +56,10 @@ namespace AXCEX_ONLINE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,EmpKey,ProjKey,authorized_assignment")] ProjectAssignment projectAssignment)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(projectAssignment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(projectAssignment);
+            if (!ModelState.IsValid) return View(projectAssignment);
+            _context.Add(projectAssignment);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: ProjectAssignments/Edit/5

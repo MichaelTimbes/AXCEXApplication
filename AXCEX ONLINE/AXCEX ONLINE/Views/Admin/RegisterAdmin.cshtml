@@ -1,6 +1,7 @@
 ﻿@model AdminRegisterViewModel
 @{
     ViewData["Title"] = "Create Admin";
+   
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -9,29 +10,35 @@
     <div class="col-md-4">
         <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
             <h4>Create a New Admin Account</h4>
-            <hr />
 
+            <hr />
+            <h5 class="card-title text-warning">@ViewData["ErrorMsg"]</h5>
+           
             <div asp-validation-summary="All" class="text-danger"></div>
 
             <div class="form-group">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <label asp-for="UserName"></label>
                 <input asp-for="UserName" class="form-control" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
 
             <div class="form-group">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="form-group">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <label asp-for="Password"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
             <div class="form-group">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <label asp-for="ConfirmPassword"></label>
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
@@ -39,6 +46,7 @@
 
             <button type="submit" class="btn btn-default">Register</button>
         </form>
+        
     </div>
 </div>
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AXCEXONLINE.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using AXCEX_ONLINE.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using AXCEX_ONLINE.Models.AccountViewModels;
 
 namespace AXCEX_ONLINE.Controllers
 {
@@ -45,7 +47,7 @@ namespace AXCEX_ONLINE.Controllers
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
-            
+
         }
         public async Task<IActionResult> AdminHome(string id = null)
         {
@@ -83,16 +85,17 @@ namespace AXCEX_ONLINE.Controllers
         public async Task<IActionResult> RegisterAdmin(AdminRegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
             if (ModelState.IsValid)
             {
                 var user = new AdminModel
                 {
-                   
-                   
-                   UserName = model.UserName,
-                   Email = model.Email
+                    UserName = model.UserName,
+                    Email = model.Email
                 };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
+
 
                 if (result.Succeeded)
                 {
@@ -117,7 +120,15 @@ namespace AXCEX_ONLINE.Controllers
                     return RedirectToLocal(returnUrl);
                 }
                 // Else
-                RedirectToAction(controllerName: "Home", actionName: "Index");
+                //RedirectToAction(controllerName: "Home", actionName: "Index");
+                else if (!result.Succeeded)
+                {
+                    var resultingErrors = result.Errors.ToList();
+                    ViewData["ErrorMsg"] = resultingErrors[0].Description;
+                  
+                    return View(model);
+                }
+
             }
 
             // If we got this far, something failed, redisplay form
@@ -142,33 +153,45 @@ namespace AXCEX_ONLINE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdminLogin(AdminLoginViewModel model, string returnUrl = null)
         {
+
             ViewData["ReturnUrl"] = returnUrl;
             // Log Info
             _logger.LogInformation("Admin logging in...");
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Admin_Uname, model.Password, model.RememberMe, lockoutOnFailure: false);
+                // This doesn't count login failures towards account lockout!!
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true!!!!
+                //var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var activeUser = await _context.AdminModel.FirstOrDefaultAsync(m => m.UserName == model.Admin_Uname);
+
+                if (activeUser == null)
+                {
+                    ViewData["ErrorMsg"] = "Email is incorrect or user doesn't exist!";
+                    return View(model);
+                }
+                var result = await _signInManager.CheckPasswordSignInAsync(activeUser, model.Password, false);
 
                 if (result.Succeeded)
                 {
+                    await _signInManager.PasswordSignInAsync(activeUser, model.Password, false, false);
+
+                    _logger.LogInformation("In the success condition!!");
                     // Session Information
-                    var admin = await _context.AdminModel.FirstOrDefaultAsync(m => m.UserName == model.Admin_Uname);
-                    HttpContext.Session.SetString(SessionUserName, admin.UserName);
-                    HttpContext.Session.SetString(SessionUserEmail, admin.Email);
-                    //HttpContext.Session.SetString(SessionUserId, admin.Id);
-                    
+                    //var activeUser = await _context.AdminModel.FirstOrDefaultAsync(m => m.Email == model.Email);
+                    HttpContext.Session.SetString(SessionUserName, activeUser.UserName);
+                    HttpContext.Session.SetString(SessionUserEmail, activeUser.Email);
+                    //HttpContext.Session.SetString(SessionUserId, activeUser.Id); // Particularly Sensitive Data- Only Use for Debug
+
                     // Log Info
-                    _logger.LogInformation("Admin logged in!");
-                    _logger.LogDebug("USING THE LOG DEBUGGER!!!!");
-                    // Return to Home
-                    return RedirectToLocal(returnUrl);
+                    _logger.LogInformation("User logged in!");
+                    _logger.LogInformation("USING THE LOG DEBUGGER!!!!");
+                    
+                    return RedirectToAction("AdminHome", "Admin", new { id = activeUser.Id });
                 }
-                
+
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("Admin account locked out... See webmaster.");
+                    _logger.LogWarning("Account locked out... See webmaster.");
                     return RedirectToAction(nameof(Lockout));
                 }
                 else
@@ -178,15 +201,74 @@ namespace AXCEX_ONLINE.Controllers
                     return View(model);
                 }
             }
-
+            _logger.LogInformation("Invalid State Condition!");
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        private object Lockout()
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdminLoginv2(LoginViewModel model, string returnUrl = null)
         {
-            throw new NotImplementedException();
+
+            ViewData["ReturnUrl"] = returnUrl;
+            // Log Info
+            _logger.LogInformation("Admin logging in...");
+
+            if (ModelState.IsValid)
+            {
+                // This doesn't count login failures towards account lockout!!
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true!!!!
+                //var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                //var activeUser = await _context.Users.FirstOrDefaultAsync(m => m.Email == model.Email);
+                var activeUser = await _context.AdminModel.Where(adm=>
+                adm.UserName == model.Email || adm.Email==model.Email).FirstOrDefaultAsync();
+
+                if (activeUser == null)
+                {
+                    ViewData["ErrorMsg"] = "Email is incorrect or user doesn't exist!";
+                    return View("AdminLogin");
+                }
+                var result = await _signInManager.CheckPasswordSignInAsync(activeUser, model.Password, false);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.PasswordSignInAsync(activeUser, model.Password, false, false);
+
+                    _logger.LogInformation("In the success condition!!");
+                    // Session Information
+                    //var activeUser = await _context.AdminModel.FirstOrDefaultAsync(m => m.Email == model.Email);
+                    HttpContext.Session.SetString(SessionUserName, activeUser.UserName);
+                    HttpContext.Session.SetString(SessionUserEmail, activeUser.Email);
+                    //HttpContext.Session.SetString(SessionUserId, activeUser.Id); // Particularly Sensitive Data- Only Use for Debug
+
+                    // Log Info
+                    _logger.LogInformation("User logged in!");
+                    _logger.LogInformation("USING THE LOG DEBUGGER!!!!");
+                    
+                    // Return to Home
+                    return RedirectToAction("AdminHome", "Admin", new { id = activeUser.Id });
+                }
+
+                if (result.IsLockedOut)
+                {
+                    _logger.LogWarning("Account locked out... See webmaster.");
+                    return RedirectToAction(nameof(Lockout));
+                }
+                else
+                {
+
+                    //ModelState.AddModelError(string.Empty, "Invalid Username or Password...");
+                    return View("AdminLogin","Admin");
+                }
+            }
+            _logger.LogInformation("Invalid State Condition!");
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
+
+        
 
         private IActionResult RedirectToLocal(string returnUrl)
         {
@@ -329,6 +411,11 @@ namespace AXCEX_ONLINE.Controllers
         private bool AdminModelExists(string id)
         {
             return _context.AdminModel.Any(e => e.Id == id);
+        }
+
+        private IActionResult Lockout()
+        {
+            throw new NotImplementedException();
         }
     }
 }
