@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using AXCEX_ONLINE.Models.CustomerViewModels;
 using System;
+using AXCEXONLINE.Data;
 using AXCEX_ONLINE.Models.AccountViewModels;
 
 namespace AXCEXONLINE.Controllers

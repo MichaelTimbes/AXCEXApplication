@@ -39,7 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BusinessLogic\" />
+    <Folder Include="BusinessLogic\Employee\" />
+    <Folder Include="BusinessLogic\Project\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 

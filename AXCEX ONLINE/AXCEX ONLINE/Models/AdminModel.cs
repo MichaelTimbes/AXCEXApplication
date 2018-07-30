@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AXCEX_ONLINE.Models;
 
-namespace AXCEX_ONLINE.Models
+namespace AXCEXONLINE.Models
 {
     // Inherits From Application User for Authentication
     public class AdminModel : ApplicationUser

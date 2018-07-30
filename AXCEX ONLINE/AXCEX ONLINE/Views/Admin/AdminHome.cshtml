@@ -1,63 +1,87 @@
-﻿@model AXCEX_ONLINE.Models.AdminModel
+﻿@using AXCEXONLINE.Models
+@model AdminModel
 @{
     ViewData["Title"] = "Admin Home";
 }
+<div class="container-fluid">
+    <h2> @ViewData["Title"]</h2>
+    <hr />
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#Project" data-toggle="tab" aria-expanded="false">Project Links</a>
 
-<h2> @ViewData["Title"]</h2>
-<hr/>
+        </li>
 
-<div class="row">
+        <li>
+            <a href="#Employees" data-toggle="tab" aria-expanded="true">Employee Management</a>
+        </li>
+        <li>
+            <a href="#Customers" data-toggle="tab" aria-expanded="true">Customer Management</a>
+        </li>
 
-    <!-- Project Management Section -->
-    <div class="card border-dark mb-3 col-md-offset-1" style="max-width: 30rem;">
-        <div class="card-header text-info">Project Management Section:</div>
-        <div class="card-body">
-            <h5 class="card-title">Project Management</h5>
-            <p class="card-text">
-                Collection of links to manage project related information. You can create, edit, and delete projects in the
-                project list.
-            </p>
-            <div class="list">
-                <ul>
-                    <li><a class="text-success" asp-controller="Project" asp-action="CreateProject">Create Project</a></li>
-                    <li><a class="text-success" asp-controller="Project" asp-action="AllProjectsPartial">Project List</a></li>
-                </ul>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <!-- Projects Section -->
+        <div class="tab-pane fade in active" style="padding-left: 20px" id="Project">
+
+            <div class="row" style="padding-top: 15px; padding-left: 10px">
+
+                <h5 style="padding-top: 15px;">
+
+                    These links are to manage project related information. You can create, edit, and delete projects in the
+                    project list.
+
+                </h5>
+
+                <div class="row">
+                    <ul>
+                        <li><a class="text-info" asp-controller="Project" asp-action="CreateProject">Create Project</a></li>
+                        <li><a class="text-info" asp-controller="Project" asp-action="AllProjectsPartial">Project List</a></li>
+                    </ul>
+                </div>
             </div>
+
+        </div>
+        <!-- Employees Section -->
+        <div class="tab-pane" style="padding-left: 20px" id="Employees">
+
+            <div class="row" style="padding-top: 15px; padding-left: 10px">
+
+                <h5 style="padding-top: 15px;">
+
+                    These links are to create, edit, and delete employees.
+
+                </h5>
+
+                <div class="row">
+                    <ul>
+                        <li><a class="text-info" asp-controller="Employee" asp-action="RegisterEmployeeAdmin">Create Employee</a></li>
+                        <li><a class="text-info" asp-controller="Employee" asp-action="Index">Employee List</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Customers Section -->
+        <div class="tab-pane" style="padding-left: 20px" id="Customers">
+
+            <div class="row" style="padding-top: 15px; padding-left: 10px">
+
+                <h5 style="padding-top: 15px;">
+
+                    These links are to create, edit, and delete customers.
+
+                </h5>
+
+                <div class="row">
+                    <ul>
+                        <li><a class="text-info" asp-controller="Customer" asp-action="Create">Create Customer</a></li>
+                        <li><a class="text-info" asp-controller="Customer" asp-action="Index">Customer List</a></li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
-
-    <!-- Employee Management Section -->
-    <div class="card border-dark mb-3 col-md-offset-1" style="max-width: 30rem;">
-        <div class="card-header text-info">Employee Management Section:</div>
-        <div class="card-body">
-            <h5 class="card-title">Employee Management</h5>
-            <p class="card-text">Collection of links to create, edit, and delete employees.</p>
-            <div class="list">
-                <ul>
-                    <li><a class="text-success" asp-controller="Employee" asp-action="RegisterEmployeeAdmin">Create Employee</a></li>
-                    <li><a class="text-success" asp-controller="Employee" asp-action="Index">Employee List</a></li>
-                </ul>
-            </div>
-        </div>
     </div>
-
-    <!-- CUSTOMER MANAGEMENT SECTION -->
-    <div class="card border-dark mb-3 col-md-offset-1" style="max-width: 30rem;">
-        <div class="card-header text-info">Customer Management Section:</div>
-        <div class="card-body">
-            <h5 class="card-title">Customer Management</h5>
-            <p class="card-text">Collection of links to create, edit, and delete customers.</p>
-            <div class="list">
-                <ul>
-                    <li><a class="text-success" asp-controller="Customer" asp-action="Create">Create Customer</a></li>
-                    <li><a class="text-success" asp-controller="Customer" asp-action="Index">Customer List</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-
-

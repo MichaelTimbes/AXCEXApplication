@@ -1,81 +1,120 @@
-﻿@model IEnumerable<AXCEX_ONLINE.Models.ProjectModel>
+﻿@using Microsoft.ApplicationInsights.Extensibility.Implementation
+@using Microsoft.AspNetCore.Mvc.TagHelpers.Internal
+@model IEnumerable<AXCEX_ONLINE.Models.ProjectModel>
+
+<style type="text/css">
+    .btn-outline-additional {
+        background-color: gray;
+        color: white;
+        border: 2px solid lightgray;
+    }
+</style>
+
+<style type="text/css">
+    .btn-outline-additional:hover {
+        background-color: whitesmoke;
+        color: black;
+        border: 2px solid lightgray;
+    }
+</style>
+
+<style type="text/css" media="screen and (max-width: 600px) and (min-width: 300px)">
+    .non-mobile {
+        display: none
+    }
+
+    .non-mobile-message {
+        color: cadetblue;
+    }
+</style>
+
+<style type="text/css" media="screen and (max-width: 2045px) and (min-width: 600px)">
+    .show-mobile-message {
+        display: none
+    }
+
+    .dont-show-mobile-mode {
+        display: none
+    }
+
+    .mobile-btn-group {
+        display: none
+    }
+</style>
 
 <p>
     @if (User.IsInRole("Administrator"))
     {
         <a role="button" class="btn btn-info" asp-action="CreateProject">Create New</a>
-       
+
     }
 </p>
-<table class="table">
-    <!--<thead>-->
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProjectName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Customer)
-        </th>
-        <th>
-            Budget
-        </th>
-        <th>
-            Current Cost
-        </th>
-        <th>
-            Project Active
-        </th>
-        <th>
-            Start
-        </th>
-        <th>
-            End
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
-    <!--</thead>-->
-    <tbody>
+
+<div style="overflow-x: auto;">
+    
+    
+        <p class="show-mobile-message">
+            Some options are not available on mobile.
+            Try landscape mode.
+        </p>
+    
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                Project
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th class="non-mobile">
+                Budget
+            </th>
+            <th class="non-mobile">
+                Cost
+            </th>
+
+            <th class="non-mobile"></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
         @foreach (var item in Model)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.ProjectName)
+
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Customer)
+
                 </td>
-                <td>
+                <td class="non-mobile">
                     @Html.DisplayFor(modelItem => item.ProjBudget)
                 </td>
-                <td>
+                <td class="non-mobile">
                     @Html.DisplayFor(modelItem => item.ProjCurentCost)
                 </td>
+
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    <div class="btn-group-vertical">
+                    <div class="btn-group-vertical btn-group-sm">
                         <a role="button" class="btn btn-primary" title="Edit" asp-action="EditProject" asp-route-id="@item.ID"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                         <a role="button" class="btn btn-info" title="Details" asp-controller="Project" asp-action="ProjectDetails" asp-route-id="@item.ID"><span class="glyphicon glyphicon-list"></span> Details</a>
-                        <a role="button" class="btn btn-outline-danger" title="Delete" asp-action="Delete" asp-route-id="@item.ID"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                        <a role="button" class="btn btn-warning" title="Delete" asp-action="Delete" asp-route-id="@item.ID"><span class="glyphicon glyphicon-remove"></span> Delete</a>
                     </div>
                 </td>
                 <td>
-                    <div class="btn-group-vertical">
+                    <div class="btn-group-vertical btn-group-sm non-mobile">
                         <a role="button" class="btn btn-primary" asp-controller="Project" asp-action="AssignEmployee" asp-route-id="@item.ID">Assign Employees</a>
-                        <a role="button" class="btn btn-outline-info" asp-controller="Project" asp-action="AssignedEmployees" asp-route-id="@item.ID">View Assigned</a>
-                        <a role="button" method="get" class="btn btn-outline-success" asp-controller="Scope" asp-action="EditScope" asp-route-id="@item.ID">Project Scope</a>
-                        <a role="button" method="get" class="btn btn-outline-success" asp-controller="WBS" asp-action="CreateWBS" asp-route-id="@item.ID">Assign Tasks</a>
+                        <a role="button" class="btn btn-info" asp-controller="Project" asp-action="AssignedEmployees" asp-route-id="@item.ID">View Assigned</a>
+                        <a role="button" method="get" class="btn btn-outline-additional" asp-controller="Scope" asp-action="EditScope" asp-route-id="@item.ID">Project Scope</a>
+                        <a role="button" method="get" class="btn btn-outline-additional" asp-controller="WBS" asp-action="CreateWBS" asp-route-id="@item.ID">Assign Tasks</a>
                     </div>
+
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

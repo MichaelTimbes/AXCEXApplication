@@ -1,19 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
-namespace AXCEX_ONLINE.Models.AdminViewModels
+namespace AXCEXONLINE.Models.AdminViewModels
 {
     public class AdminRegisterViewModel
     {
-        
-      
-        [Required]
-        [Display(Name = "Admin User Name")]
-        public string UserName { get; set; }
+
+        [TempData] public List<string> Errors { get; set; }
+    
 
         [Required]
         [EmailAddress]

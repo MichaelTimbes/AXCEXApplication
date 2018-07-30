@@ -1,4 +1,5 @@
-﻿@model AdminRegisterViewModel
+﻿@using AXCEXONLINE.Models.AdminViewModels
+@model AdminRegisterViewModel
 @{
     ViewData["Title"] = "Create Admin";
    
@@ -12,16 +13,19 @@
             <h4>Create a New Admin Account</h4>
 
             <hr />
-            <h5 class="card-title text-warning">@ViewData["ErrorMsg"]</h5>
+           
+                @if (@Model.Errors != null)
+                {
+                    foreach (var err in @Model.Errors)
+                     {
+                         <h5 class="text-warning">
+                            @err
+                         </h5>
+                     }
+                }
+            
            
             <div asp-validation-summary="All" class="text-danger"></div>
-
-            <div class="form-group">
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
 
             <div class="form-group">
                 <div asp-validation-summary="All" class="text-danger"></div>

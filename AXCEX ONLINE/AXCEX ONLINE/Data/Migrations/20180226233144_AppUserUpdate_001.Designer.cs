@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
+using AXCEXONLINE.Data;
 
 namespace AXCEX_ONLINE.Data.Migrations
 {
