@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AXCEXONLINE.Controllers;
+using AXCEXONLINE.BusinessLogic.Project;
 using AXCEXONLINE.Data;
+using AXCEXONLINE.Models.ProjectViewModels;
 using AXCEX_ONLINE.Data;
 using AXCEX_ONLINE.Models;
 using AXCEX_ONLINE.Models.ProjectViewModels;
@@ -14,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace AXCEX_ONLINE.Controllers
+namespace AXCEXONLINE.Controllers
 {
     public class ProjectController : Controller
     {
@@ -38,6 +39,7 @@ namespace AXCEX_ONLINE.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            ProjectBl.ProjectLayer(context, appcontext);
         }
 
         // GET: ProjectModels
@@ -51,43 +53,20 @@ namespace AXCEX_ONLINE.Controllers
         }
 
         // GET: ProjectModels/Details/5
+        /// <summary>
+        /// Retrieves the details for a specific Project Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>ProjectDetails view model</returns>
+        
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> ProjectDetails(int? id)
+
+        public async Task<IActionResult> ProjectDetails(int id)
         {
-            if (id == null) return NotFound();
-
-            var projectModel = await _context.ProjectModel
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (projectModel == null) return NotFound();
-            // Find all the assignments
-            var projectsAssignment = _context.ProjectAssignments.Where(P => P.ProjKey == id);
-
-            var viewModel = new ProjectDetailsViewClass
-            {
-                ActiveProj = projectModel.IsActive,
-                Custid = projectModel.Customer,
-                ProjBudget = projectModel.ProjBudget,
-                ProjCost = projectModel.ProjCurentCost,
-                ProjectName = projectModel.ProjectName,
-                ProjEnd = projectModel.EndDate,
-                ProjStart = projectModel.StartDate
-            };
-            viewModel.SetProjectID(projectModel.ID);
-
-            // Grab Scope and Have Most Reccent be the Most Updated One
-            var scopeProj = _context.Scopes.Where(S => S.ProjectId == projectModel.ID).OrderBy(S => S.ScopeVersion);
-
-            // If The Scope Does Exist, Add it
-            viewModel.CurrentScope = scopeProj.First();
-
-            foreach (var p in projectsAssignment)
-            {
-                var employee = _appcontext.EmployeeModel.Where(u => u.EMPID == p.EmpKey);
-
-                viewModel.Employees.Add(employee.First());
-            }
-
-            return View(viewModel);
+            if (id < 0) return NotFound();
+            
+            return View(await 
+                ProjectBl.PrepareViewProjectDetails(id));
         }
 
         #region ASSIGNED_EMPLOYEES

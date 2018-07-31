@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using AXCEX_ONLINE.Models;
 
-namespace AXCEX_ONLINE.Models.ProjectViewModels
+namespace AXCEXONLINE.Models.ProjectViewModels
 {
     public class ProjectDetailsViewClass
     {
-        private int ProjectID;
-
-        public int GetProjectID()
-        {
-            return ProjectID;
-        }
-        public void SetProjectID(int _projectID)
-        {
-             ProjectID = _projectID;
-        }
-
-
+        public int ProjectId { get; set; }
+        
         [Display(Name = "Project Name")]
         public string ProjectName { get; set; }
 

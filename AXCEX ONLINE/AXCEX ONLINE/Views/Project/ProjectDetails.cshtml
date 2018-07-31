@@ -1,4 +1,5 @@
-﻿@model AXCEX_ONLINE.Models.ProjectViewModels.ProjectDetailsViewClass
+﻿@using AXCEXONLINE.Models.ProjectViewModels
+@model AXCEXONLINE.Models.ProjectViewModels.ProjectDetailsViewClass
 
 @{
     ViewData["Title"] = "ProjectDetails";
@@ -65,8 +66,8 @@
 @if (User.IsInRole("Administrator"))
 {
     <div>
-        <a role="button" class="btn btn-default" asp-action="EditProject" asp-route-id=@Model.GetProjectID() title="Edit Basic Details">Edit</a> 
-        <a role="button" class="btn btn-info" asp-controller="Project" asp-action="AssignedEmployees" asp-route-id=@Model.GetProjectID() title="View Assigned Employees">View Assigned</a>
+        <a role="button" class="btn btn-default" asp-action="EditProject" asp-route-id=@Model.ProjectId title="Edit Basic Details">Edit</a> 
+        <a role="button" class="btn btn-info" asp-controller="Project" asp-action="AssignedEmployees" asp-route-id=@Model.ProjectId title="View Assigned Employees">View Assigned</a>
         <a role="button" class="btn btn-default" asp-controller="Project" asp-action="AllProjectsPartial">Project List</a>
     </div>
 }
